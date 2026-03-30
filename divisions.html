@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Divisions — NVD Group</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: 'DM Sans', sans-serif; background: #f8f8f6; color: #1a1a2e; line-height: 1.6; overflow-x: hidden; }
+    :root {
+      --navy: #0d2461; --blue: #1a3fa8; --blue-mid: #2952c8; --blue-light: #e8edf8;
+      --white: #ffffff; --off-white: #f8f8f6; --grey: #8a8a8a; --grey-dark: #4a4a4a;
+      --ink: #1a1a2e; --border: rgba(13,36,97,0.12); --shadow: 0 4px 32px rgba(13,36,97,0.10);
+      --shadow-hover: 0 12px 48px rgba(13,36,97,0.18); --transition: 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; line-height: 1.18; }
+    h1 { font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700; }
+    h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 600; }
+    h3 { font-size: clamp(1.2rem, 2vw, 1.6rem); font-weight: 600; }
+    p { font-size: 1rem; color: var(--grey-dark); line-height: 1.75; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .section { padding: 6rem 0; }
+    .label { font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); margin-bottom: 1rem; display: block; }
+    .divider { width: 3rem; height: 3px; background: var(--blue); margin: 1.5rem 0; }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* NAV */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(248,248,246,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: var(--transition); }
+    .nav.scrolled { background: rgba(255,255,255,0.98); box-shadow: 0 2px 24px rgba(13,36,97,0.08); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .nav-logo { display: flex; flex-direction: column; gap: 1px; }
+    .nav-logo-main { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--navy); }
+    .nav-logo-sub { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue); }
+    .nav-links { display: flex; align-items: center; gap: 2.4rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--grey-dark); transition: color var(--transition); position: relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; right:0; height:2px; background:var(--blue); transform:scaleX(0); transition:transform var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--navy); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+    .nav-cta { background: var(--navy); color: var(--white) !important; padding: 0.6rem 1.4rem; border-radius: 2px; font-size: 0.8rem !important; font-weight: 600 !important; }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--blue-mid) !important; }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--navy); }
+    .mobile-nav { position: fixed; top: 72px; left: 0; right: 0; z-index: 99; background: var(--white); border-bottom: 1px solid var(--border); max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; }
+    .mobile-nav.open { max-height: 400px; padding: 1.5rem 0; }
+    .mobile-nav-links { list-style: none; padding: 0 2rem; }
+    .mobile-nav-links li { border-bottom: 1px solid var(--border); }
+    .mobile-nav-links a { display: block; padding: 1rem 0; font-size: 1rem; font-weight: 500; color: var(--ink); }
+
+    /* PAGE HERO */
+    .page-hero { background: var(--navy); padding: 9rem 0 5rem; position: relative; overflow: hidden; }
+    .page-hero::before { content:''; position:absolute; top:-30%; right:-10%; width:500px; height:500px; border:1px solid rgba(255,255,255,0.05); border-radius:50%; }
+    .page-hero::after { content:''; position:absolute; bottom:-20%; left:5%; width:300px; height:300px; border:1px solid rgba(255,255,255,0.04); border-radius:50%; }
+    .page-hero-inner { position: relative; z-index: 2; }
+    .page-hero .label { color: rgba(255,255,255,0.55); }
+    .page-hero h1 { color: var(--white); margin-bottom: 1rem; }
+    .page-hero p { color: rgba(255,255,255,0.75); max-width: 600px; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .breadcrumb a { font-size: 0.78rem; color: rgba(255,255,255,0.5); font-weight: 500; }
+    .breadcrumb a:hover { color: rgba(255,255,255,0.8); }
+    .breadcrumb-sep { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+    .breadcrumb-current { font-size: 0.78rem; color: rgba(255,255,255,0.75); font-weight: 600; }
+
+    /* DIVISIONS NAV */
+    .div-nav { background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: 72px; z-index: 50; }
+    .div-nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; gap: 0; }
+    .div-nav-link { padding: 1.25rem 2rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); border-bottom: 3px solid transparent; transition: var(--transition); }
+    .div-nav-link:hover { color: var(--navy); border-bottom-color: var(--blue); }
+    .div-nav-link.active { color: var(--navy); border-bottom-color: var(--blue); }
+
+    /* DIVISION SECTIONS */
+    .div-section { padding: 7rem 0; }
+    .div-section:nth-child(odd) { background: var(--white); }
+    .div-section:nth-child(even) { background: var(--off-white); }
+    .div-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .div-grid.reverse { direction: rtl; }
+    .div-grid.reverse > * { direction: ltr; }
+    .div-img-wrap { position: relative; }
+    .div-img-wrap img { width: 100%; height: 500px; object-fit: cover; display: block; }
+    .div-img-accent { position: absolute; top: 1.5rem; left: 1.5rem; right: -1.5rem; bottom: -1.5rem; background: var(--blue-light); z-index: -1; }
+    .div-img-badge { position: absolute; bottom: -1.5rem; right: -1.5rem; background: var(--navy); color: var(--white); padding: 1.5rem; text-align: center; }
+    .div-img-badge-main { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; }
+    .div-img-badge-sub { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; margin-top: 0.25rem; }
+    .div-content h2 { color: var(--navy); margin-bottom: 1rem; }
+    .div-content p { margin-bottom: 1.2rem; }
+    .div-services-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); margin: 2rem 0 1rem; }
+    .div-services-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .div-services-list li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; color: var(--grey-dark); }
+    .div-services-list li::before { content: ''; width: 6px; height: 6px; background: var(--blue); flex-shrink: 0; }
+    .div-cta { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2rem; background: var(--navy); color: var(--white); padding: 0.9rem 2rem; font-size: 0.875rem; font-weight: 600; letter-spacing: 0.04em; border: 2px solid var(--navy); transition: var(--transition); }
+    .div-cta:hover { background: var(--blue-mid); border-color: var(--blue-mid); }
+
+    /* STATS ROW */
+    .stats-row { background: var(--navy); padding: 4rem 0; }
+    .stats-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+    .stat-item { text-align: center; padding: 1.5rem; border-right: 1px solid rgba(255,255,255,0.1); }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: var(--white); line-height: 1; }
+    .stat-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 0.5rem; }
+
+    /* TEAM/FOUNDER */
+    .founder-section { background: var(--off-white); padding: 6rem 0; }
+    .founder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .founder-img-wrap { position: relative; }
+    .founder-img-bg { position: absolute; top: 1.5rem; right: 1.5rem; bottom: -1.5rem; left: -1.5rem; background: var(--blue-light); z-index: 0; }
+    .founder-portrait { position: relative; z-index: 1; width: 100%; height: 520px; object-fit: cover; object-position: top center; display: block; }
+    .founder-name-badge { position: absolute; z-index: 2; bottom: -1.5rem; left: -1.5rem; background: var(--blue); color: var(--white); padding: 1.25rem 2rem; }
+    .founder-name-badge strong { display: block; font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; }
+    .founder-name-badge span { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.8; }
+    .founder-content h2 { color: var(--navy); margin-bottom: 1rem; }
+    .founder-content p { margin-bottom: 1.2rem; }
+    .founder-highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+    .founder-highlight { background: var(--white); padding: 1.5rem; border-left: 3px solid var(--blue); }
+    .founder-highlight-title { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--navy); margin-bottom: 0.3rem; }
+    .founder-highlight-desc { font-size: 0.78rem; color: var(--grey); line-height: 1.5; }
+
+    /* CTA */
+    .cta-banner { background: var(--blue); padding: 4rem 0; }
+    .cta-banner-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+    .cta-banner h2 { color: var(--white); font-size: clamp(1.5rem, 3vw, 2.2rem); }
+    .cta-banner p { color: rgba(255,255,255,0.8); margin-top: 0.5rem; }
+    .cta-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-cta-white { background: var(--white); color: var(--navy); padding: 0.9rem 2rem; font-size: 0.875rem; font-weight: 600; border: 2px solid var(--white); display: inline-block; transition: var(--transition); }
+    .btn-cta-white:hover { background: var(--off-white); }
+    .btn-cta-outline { background: transparent; color: var(--white); padding: 0.9rem 2rem; font-size: 0.875rem; font-weight: 600; border: 2px solid rgba(255,255,255,0.5); display: inline-block; transition: var(--transition); }
+    .btn-cta-outline:hover { background: rgba(255,255,255,0.1); }
+
+    /* FOOTER */
+    .footer { background: #0a1c4d; padding: 5rem 0 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .footer-brand-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--white); font-weight: 700; margin-bottom: 0.25rem; }
+    .footer-brand-sub { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1rem; }
+    .footer-brand-desc { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
+    .footer-col-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1.25rem; }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 0.6rem; }
+    .footer-links a { font-size: 0.85rem; color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 2rem; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+    .footer-bottom-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-bottom-links a { font-size: 0.78rem; color: rgba(255,255,255,0.3); transition: color var(--transition); }
+
+    @media (max-width: 960px) {
+      .nav-links { display: none; } .nav-toggle { display: flex; }
+      .div-grid, .founder-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .div-grid.reverse { direction: ltr; }
+      .stats-inner { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .stats-inner { grid-template-columns: 1fr; }
+      .div-nav-inner { overflow-x: auto; }
+      .div-services-list { grid-template-columns: 1fr; }
+      .founder-highlights { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-main">NVD Group</span>
+        <span class="nav-logo-sub">Build · Design · Consult</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="divisions.html" class="active">Divisions</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <ul class="mobile-nav-links">
+      <li><a href="index.html#about" onclick="closeMobileNav()">About</a></li>
+      <li><a href="services.html" onclick="closeMobileNav()">Services</a></li>
+      <li><a href="divisions.html" onclick="closeMobileNav()">Divisions</a></li>
+      <li><a href="projects.html" onclick="closeMobileNav()">Projects</a></li>
+      <li><a href="contact.html" onclick="closeMobileNav()">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-inner">
+        <div class="breadcrumb reveal">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <span class="breadcrumb-current">Divisions</span>
+        </div>
+        <span class="label reveal">Our Three Companies</span>
+        <h1 class="reveal reveal-delay-1">Specialized.<br/>Unified. Complete.</h1>
+        <p class="reveal reveal-delay-2">Three distinct companies, each an expert in their domain — working in harmony to deliver the complete project solution for every client.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STICKY DIVISION NAV -->
+  <div class="div-nav">
+    <div class="div-nav-inner">
+      <a href="#builders" class="div-nav-link active" id="nav-builders">NVD Builders &amp; Developers</a>
+      <a href="#consulting" class="div-nav-link" id="nav-consulting">NVD Freelancing &amp; Consultants</a>
+      <a href="#interio" class="div-nav-link" id="nav-interio">NVD Interio</a>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stats-inner">
+      <div class="stat-item reveal">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Specialized Divisions</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Countries Served</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-num">100+</div>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-3">
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Years of Expertise</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIVISION 1: BUILDERS -->
+  <section class="div-section" id="builders">
+    <div class="container">
+      <div class="div-grid">
+        <div class="div-img-wrap reveal">
+          <div class="div-img-accent"></div>
+          <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80" alt="NVD Builders and Developers construction" loading="lazy" />
+          <div class="div-img-badge">
+            <div class="div-img-badge-main">NVD B&amp;D</div>
+            <div class="div-img-badge-sub">Builders &amp; Developers</div>
+          </div>
+        </div>
+        <div class="div-content reveal reveal-delay-1">
+          <span class="label">Division 01</span>
+          <h2>NVD Builders &amp; Developers</h2>
+          <div class="divider"></div>
+          <p>Nestled in the heart of Maharashtra, our headquarters in the enchanting city of Amravati brings forth a legacy of excellence in real estate. With a commitment to quality, innovation, and customer satisfaction, we are dedicated to crafting exceptional living spaces that redefine luxury and comfort.</p>
+          <p>We specialize in creating bespoke living experiences — from cozy 2 BHK bungalows to expansive 5 BHK villas. Each project is meticulously crafted, combining exquisite craftsmanship, cutting-edge technology, and sustainable practices. Our dedication to customer satisfaction goes beyond construction — we build lasting relationships.</p>
+          <div class="div-services-title">Services Offered</div>
+          <ul class="div-services-list">
+            <li>Houses &amp; Bungalows</li>
+            <li>Duplex &amp; Row Houses</li>
+            <li>High Rise Buildings</li>
+            <li>Residential Apartments</li>
+            <li>Factories &amp; Industrial Sheds</li>
+            <li>Development Projects</li>
+          </ul>
+          <a href="services.html#construction" class="div-cta">Explore Construction Services →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVISION 2: CONSULTING -->
+  <section class="div-section" id="consulting">
+    <div class="container">
+      <div class="div-grid reverse">
+        <div class="div-img-wrap reveal">
+          <div class="div-img-accent" style="left:-1.5rem;right:1.5rem;"></div>
+          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80" alt="NVD Freelancing and Consultants project management" loading="lazy" />
+          <div class="div-img-badge" style="left:-1.5rem;right:auto;">
+            <div class="div-img-badge-main">NVD F&amp;C</div>
+            <div class="div-img-badge-sub">Freelancing &amp; Consultants</div>
+          </div>
+        </div>
+        <div class="div-content reveal reveal-delay-1">
+          <span class="label">Division 02</span>
+          <h2>NVD Freelancing &amp; Consultants</h2>
+          <div class="divider"></div>
+          <p>At NVD Freelancing &amp; Consultants, we believe that every great accomplishment begins with a well-crafted plan, meticulous scheduling, and unwavering cost control. Project management isn't just a task for us — it's an art form meticulously perfected over years of experience and dedication.</p>
+          <p>We understand that every project is unique, deserving a personalized approach. Our experts meticulously craft strategies that align with your project's specific needs, ensuring a tailor-made roadmap to success. Collaboration is at the heart of our philosophy — your success is our success.</p>
+          <div class="div-services-title">Services Offered</div>
+          <ul class="div-services-list">
+            <li>Project Management</li>
+            <li>Planning &amp; Scheduling</li>
+            <li>Cost Monitoring &amp; Control</li>
+            <li>Financial Advisory</li>
+            <li>Cost Analysis &amp; Estimation</li>
+            <li>Project Feasibility</li>
+            <li>Value Engineering</li>
+            <li>Business Process Re-engineering</li>
+          </ul>
+          <a href="services.html#consulting" class="div-cta">Explore Consulting Services →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVISION 3: INTERIO -->
+  <section class="div-section" id="interio">
+    <div class="container">
+      <div class="div-grid">
+        <div class="div-img-wrap reveal">
+          <div class="div-img-accent"></div>
+          <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80" alt="NVD Interio interior design" loading="lazy" />
+          <div class="div-img-badge">
+            <div class="div-img-badge-main">NVD Interio</div>
+            <div class="div-img-badge-sub">Interior Design &amp; Build</div>
+          </div>
+        </div>
+        <div class="div-content reveal reveal-delay-1">
+          <span class="label">Division 03</span>
+          <h2>NVD Interio</h2>
+          <div class="divider"></div>
+          <p>At NVD Interio, we are more than just designers — we are creators of experiences, curators of aesthetics, and sculptors of functionality. With an unwavering commitment to excellence, we have established ourselves as a trailblazer in the industry, redefining the art of interior design and construction.</p>
+          <p>Our expertise shines brightest in the heart of every home — the kitchen. From sleek modern marvels to timeless classics, our modular kitchens are meticulously designed to cater to your unique taste. Your home is a reflection of your persona, and we pride ourselves on translating your aspirations into living realities.</p>
+          <div class="div-services-title">Services Offered</div>
+          <ul class="div-services-list">
+            <li>Home Interior Design</li>
+            <li>Office Interior Design</li>
+            <li>Modular Kitchen Design</li>
+            <li>Planning &amp; 3D Rendering</li>
+            <li>Modular Wardrobes</li>
+            <li>Landscaping</li>
+            <li>Custom Furniture</li>
+            <li>Paint &amp; Wallpapers</li>
+          </ul>
+          <a href="services.html#interiors" class="div-cta">Explore Interior Services →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDER SECTION -->
+  <section class="founder-section">
+    <div class="container">
+      <div class="founder-grid">
+        <div class="founder-img-wrap reveal">
+          <div class="founder-img-bg"></div>
+          <!-- SVG portrait of founder -->
+          <svg class="founder-portrait" viewBox="0 0 420 520" xmlns="http://www.w3.org/2000/svg">
+            <rect width="420" height="520" fill="#d8e2f0"/>
+            <rect x="0" y="340" width="420" height="180" fill="#c4d0e8"/>
+            <!-- Office chair back -->
+            <rect x="155" y="280" width="110" height="80" rx="8" fill="#2a2a3e"/>
+            <!-- Suit body -->
+            <rect x="80" y="340" width="260" height="180" rx="6" fill="#1a1a2e"/>
+            <rect x="165" y="345" width="90" height="155" fill="#1a3fa8"/>
+            <!-- Collar -->
+            <polygon points="165,345 210,385 165,405" fill="#f4f4f4"/>
+            <polygon points="255,345 210,385 255,405" fill="#f4f4f4"/>
+            <polygon points="140,345 165,345 165,405 118,455" fill="#252540"/>
+            <polygon points="280,345 255,345 255,405 302,455" fill="#252540"/>
+            <!-- Neck -->
+            <rect x="186" y="285" width="48" height="65" fill="#c8a882"/>
+            <!-- Head -->
+            <ellipse cx="210" cy="240" rx="68" ry="78" fill="#c8a882"/>
+            <!-- Hair -->
+            <ellipse cx="210" cy="175" rx="67" ry="38" fill="#1c1c1c"/>
+            <rect x="143" y="175" width="134" height="28" fill="#1c1c1c"/>
+            <!-- Ears -->
+            <ellipse cx="142" cy="242" rx="12" ry="16" fill="#c8a882"/>
+            <ellipse cx="278" cy="242" rx="12" ry="16" fill="#c8a882"/>
+            <!-- Eyes -->
+            <ellipse cx="183" cy="238" rx="10" ry="12" fill="#fff" opacity="0.95"/>
+            <ellipse cx="237" cy="238" rx="10" ry="12" fill="#fff" opacity="0.95"/>
+            <ellipse cx="183" cy="239" rx="6" ry="7" fill="#3a2010"/>
+            <ellipse cx="237" cy="239" rx="6" ry="7" fill="#3a2010"/>
+            <ellipse cx="184" cy="238" rx="2.5" ry="3" fill="#111"/>
+            <ellipse cx="238" cy="238" rx="2.5" ry="3" fill="#111"/>
+            <!-- Eyebrows -->
+            <path d="M173 224 Q183 219 193 224" stroke="#1c1c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M227 224 Q237 219 247 224" stroke="#1c1c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <!-- Nose -->
+            <path d="M210 245 L205 262 Q210 266 215 262 L210 245" fill="#b89060" opacity="0.6"/>
+            <!-- Mustache -->
+            <path d="M191 270 Q210 278 229 270" stroke="#1c1c1c" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+            <path d="M191 270 Q200 275 210 273 Q220 275 229 270" fill="#1c1c1c" opacity="0.7"/>
+            <!-- Arms -->
+            <rect x="28" y="355" width="68" height="165" rx="12" fill="#1a1a2e"/>
+            <rect x="324" y="355" width="68" height="165" rx="12" fill="#1a1a2e"/>
+            <!-- Hands -->
+            <ellipse cx="62" cy="530" rx="32" ry="18" fill="#c8a882"/>
+            <ellipse cx="358" cy="530" rx="32" ry="18" fill="#c8a882"/>
+            <!-- Watch on left wrist -->
+            <rect x="46" y="488" width="32" height="14" rx="3" fill="#888"/>
+            <rect x="49" y="490" width="26" height="10" rx="2" fill="#222"/>
+          </svg>
+          <div class="founder-name-badge">
+            <strong>Naved Akram</strong>
+            <span>Founder &amp; Think Tank</span>
+          </div>
+        </div>
+        <div class="founder-content reveal reveal-delay-1">
+          <span class="label">The Think Tank</span>
+          <h2>A Vision Born From Courage &amp; Craft</h2>
+          <div class="divider"></div>
+          <p>In a world dominated by nine-to-five routines and familiar paths, <strong>Naved Akram</strong> stands out as a beacon of courage and inspiration. A Civil Engineer armed with an MBA in Construction Management, he built a dynamic career spanning projects across India, Saudi Arabia, and Dubai.</p>
+          <p>Embracing his entrepreneurial spirit, Naved returned to Amravati and founded NVD Group — three specialized companies united by a shared commitment to quality, innovation, and lasting client relationships. Like a master architect, he crafted each venture with passion and precision, weaving together creativity, innovation, and business acumen.</p>
+          <p>Today, NVD Group is a growing collective of problem solvers, creative thinkers, and solution providers — offering a complete project lifecycle service from feasibility study to finishing touch.</p>
+          <div class="founder-highlights">
+            <div class="founder-highlight">
+              <div class="founder-highlight-title">Education</div>
+              <p class="founder-highlight-desc">Civil Engineering + MBA in Construction Management</p>
+            </div>
+            <div class="founder-highlight">
+              <div class="founder-highlight-title">Experience</div>
+              <p class="founder-highlight-desc">India, Saudi Arabia &amp; Dubai — 10+ years across small, medium, and mega projects</p>
+            </div>
+            <div class="founder-highlight">
+              <div class="founder-highlight-title">Mission</div>
+              <p class="founder-highlight-desc">Complete project lifecycle solutions with unwavering quality and client satisfaction</p>
+            </div>
+            <div class="founder-highlight">
+              <div class="founder-highlight-title">Values</div>
+              <p class="founder-highlight-desc">Knowledge · Creativity · Sustainability — the three pillars of NVD Group</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <div class="cta-banner-inner">
+      <div>
+        <h2 class="reveal">Work With NVD Group</h2>
+        <p class="reveal reveal-delay-1">Three divisions, one commitment — your project's success.</p>
+      </div>
+      <div class="cta-actions reveal reveal-delay-2">
+        <a href="contact.html" class="btn-cta-white">Get in Touch</a>
+        <a href="projects.html" class="btn-cta-outline">See Our Projects</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">NVD Group</div>
+          <div class="footer-brand-sub">Build · Design · Consult</div>
+          <p class="footer-brand-desc">A multi-disciplinary construction, interior design, and project management consultancy headquartered in Amravati, Maharashtra.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Divisions</div>
+          <ul class="footer-links">
+            <li><a href="#builders">NVD Builders &amp; Developers</a></li>
+            <li><a href="#consulting">NVD Freelancing &amp; Consultants</a></li>
+            <li><a href="#interio">NVD Interio</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Services</div>
+          <ul class="footer-links">
+            <li><a href="services.html#construction">Construction</a></li>
+            <li><a href="services.html#consulting">Project Management</a></li>
+            <li><a href="services.html#interiors">Interior Design</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Connect</div>
+          <ul class="footer-links">
+            <li><a href="mailto:freelance.nvd@gmail.com">freelance.nvd@gmail.com</a></li>
+            <li><a href="http://www.nvdgroup.net" target="_blank" rel="noopener">www.nvdgroup.net</a></li>
+            <li><a href="https://www.linkedin.com/in/navedakram/" target="_blank" rel="noopener">LinkedIn: /navedakram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 NVD Group. All rights reserved.</p>
+        <ul class="footer-bottom-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); });
+    const toggle = document.getElementById('navToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    toggle.addEventListener('click', () => { mobileNav.classList.toggle('open'); });
+    function closeMobileNav() { mobileNav.classList.remove('open'); }
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // Sticky division nav highlighting
+    const sections = ['builders','consulting','interio'];
+    const divNavLinks = { builders: document.getElementById('nav-builders'), consulting: document.getElementById('nav-consulting'), interio: document.getElementById('nav-interio') };
+    window.addEventListener('scroll', () => {
+      let current = 'builders';
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 200) current = id;
+      });
+      Object.keys(divNavLinks).forEach(k => { divNavLinks[k].classList.toggle('active', k === current); });
+    });
+  </script>
+</body>
+</html>

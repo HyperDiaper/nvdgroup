@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — NVD Group</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: 'DM Sans', sans-serif; background: #f8f8f6; color: #1a1a2e; line-height: 1.6; overflow-x: hidden; }
+    :root {
+      --navy: #0d2461; --blue: #1a3fa8; --blue-mid: #2952c8; --blue-light: #e8edf8;
+      --white: #ffffff; --off-white: #f8f8f6; --grey: #8a8a8a; --grey-dark: #4a4a4a;
+      --ink: #1a1a2e; --border: rgba(13,36,97,0.12); --shadow: 0 4px 32px rgba(13,36,97,0.10);
+      --transition: 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.18; }
+    h1 { font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700; }
+    h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 600; }
+    h3 { font-size: clamp(1.1rem, 1.8vw, 1.35rem); font-weight: 600; }
+    p { font-size: 1rem; color: var(--grey-dark); line-height: 1.75; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .label { font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); margin-bottom: 1rem; display: block; }
+    .divider { width: 3rem; height: 3px; background: var(--blue); margin: 1.5rem 0; }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* NAV */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(248,248,246,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: var(--transition); }
+    .nav.scrolled { background: rgba(255,255,255,0.98); box-shadow: 0 2px 24px rgba(13,36,97,0.08); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .nav-logo { display: flex; flex-direction: column; gap: 1px; }
+    .nav-logo-main { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--navy); }
+    .nav-logo-sub { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue); }
+    .nav-links { display: flex; align-items: center; gap: 2.4rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--grey-dark); transition: color var(--transition); position: relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; right:0; height:2px; background:var(--blue); transform:scaleX(0); transition:transform var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--navy); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+    .nav-cta { background: var(--navy); color: var(--white) !important; padding: 0.6rem 1.4rem; border-radius: 2px; font-size: 0.8rem !important; font-weight: 600 !important; }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--blue-mid) !important; }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--navy); }
+    .mobile-nav { position: fixed; top: 72px; left: 0; right: 0; z-index: 99; background: var(--white); border-bottom: 1px solid var(--border); max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; }
+    .mobile-nav.open { max-height: 400px; padding: 1.5rem 0; }
+    .mobile-nav-links { list-style: none; padding: 0 2rem; }
+    .mobile-nav-links li { border-bottom: 1px solid var(--border); }
+    .mobile-nav-links a { display: block; padding: 1rem 0; font-size: 1rem; font-weight: 500; color: var(--ink); }
+
+    /* PAGE HERO */
+    .page-hero { background: var(--navy); padding: 9rem 0 5rem; position: relative; overflow: hidden; }
+    .page-hero::before { content:''; position:absolute; top:-30%; right:-10%; width:500px; height:500px; border:1px solid rgba(255,255,255,0.05); border-radius:50%; }
+    .page-hero::after { content:''; position:absolute; bottom:-20%; left:5%; width:300px; height:300px; border:1px solid rgba(255,255,255,0.04); border-radius:50%; }
+    .page-hero-inner { position: relative; z-index: 2; }
+    .page-hero .label { color: rgba(255,255,255,0.55); }
+    .page-hero h1 { color: var(--white); margin-bottom: 1rem; }
+    .page-hero p { color: rgba(255,255,255,0.75); max-width: 600px; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .breadcrumb a { font-size: 0.78rem; color: rgba(255,255,255,0.5); font-weight: 500; }
+    .breadcrumb-sep { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+    .breadcrumb-current { font-size: 0.78rem; color: rgba(255,255,255,0.75); font-weight: 600; }
+
+    /* CONTACT GRID */
+    .contact-section { padding: 6rem 0; background: var(--white); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start; }
+
+    /* CONTACT INFO */
+    .contact-info h2 { color: var(--navy); margin-bottom: 1rem; }
+    .contact-info p { margin-bottom: 2rem; }
+    .contact-detail { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.75rem; }
+    .contact-detail-icon { width: 44px; height: 44px; background: var(--blue-light); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-detail-icon svg { stroke: var(--blue); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .contact-detail-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey); margin-bottom: 0.3rem; }
+    .contact-detail-value { font-size: 0.95rem; color: var(--ink); font-weight: 500; line-height: 1.6; }
+    .contact-detail-value a { color: var(--blue); transition: color var(--transition); }
+    .contact-detail-value a:hover { color: var(--navy); }
+
+    /* SOCIAL LINKS */
+    .social-section { margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); }
+    .social-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey); margin-bottom: 1rem; }
+    .social-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .social-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.6rem 1.1rem; font-size: 0.78rem; font-weight: 600;
+      color: var(--navy); border: 1px solid var(--border);
+      background: var(--off-white); letter-spacing: 0.04em;
+      transition: var(--transition);
+    }
+    .social-link:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .social-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    /* FORM */
+    .contact-form-wrap { background: var(--off-white); padding: 3rem; border: 1px solid var(--border); }
+    .form-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy); margin-bottom: 0.5rem; }
+    .form-subtitle { font-size: 0.85rem; color: var(--grey); margin-bottom: 2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--grey-dark); margin-bottom: 0.5rem; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 0.85rem 1rem; font-size: 0.9rem; font-family: 'DM Sans', sans-serif;
+      background: var(--white); border: 1px solid var(--border); color: var(--ink);
+      outline: none; transition: border-color var(--transition), box-shadow var(--transition);
+      appearance: none; -webkit-appearance: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,63,168,0.08);
+    }
+    .form-group input.error, .form-group select.error, .form-group textarea.error { border-color: #c0392b; }
+    .form-group textarea { height: 130px; resize: vertical; }
+    .form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8a8a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; cursor: pointer; }
+    .form-error-msg { font-size: 0.75rem; color: #c0392b; margin-top: 0.3rem; display: none; }
+    .form-error-msg.visible { display: block; }
+    .form-submit {
+      width: 100%; padding: 1rem 2rem; background: var(--navy); color: var(--white);
+      font-size: 0.9rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      border: 2px solid var(--navy); cursor: pointer; transition: var(--transition);
+      margin-top: 0.5rem; font-family: 'DM Sans', sans-serif;
+    }
+    .form-submit:hover:not(:disabled) { background: var(--blue-mid); border-color: var(--blue-mid); }
+    .form-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+    .form-success {
+      display: none; text-align: center; padding: 3rem 2rem;
+    }
+    .form-success.visible { display: block; }
+    .form-success-icon { width: 64px; height: 64px; border: 2px solid var(--blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; }
+    .form-success-icon svg { stroke: var(--blue); fill: none; stroke-width: 2; }
+    .form-success h3 { color: var(--navy); margin-bottom: 0.75rem; }
+    .form-success p { font-size: 0.9rem; }
+
+    /* MAP / LOCATION STRIP */
+    .location-strip { background: var(--navy); padding: 4rem 0; }
+    .location-strip-inner { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .loc-item { padding: 2rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+    .loc-item-icon { width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+    .loc-item-icon svg { stroke: rgba(255,255,255,0.7); fill: none; stroke-width: 1.5; }
+    .loc-item-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--white); margin-bottom: 0.5rem; }
+    .loc-item-value { font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.7; }
+    .loc-item-value a { color: rgba(255,255,255,0.8); transition: color var(--transition); }
+    .loc-item-value a:hover { color: var(--white); }
+
+    /* FOOTER */
+    .footer { background: #0a1c4d; padding: 5rem 0 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .footer-brand-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--white); font-weight: 700; margin-bottom: 0.25rem; }
+    .footer-brand-sub { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1rem; }
+    .footer-brand-desc { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
+    .footer-col-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1.25rem; }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 0.6rem; }
+    .footer-links a { font-size: 0.85rem; color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 2rem; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+    .footer-bottom-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-bottom-links a { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+
+    @media (max-width: 960px) {
+      .nav-links { display: none; } .nav-toggle { display: flex; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .location-strip-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form-wrap { padding: 2rem 1.5rem; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-main">NVD Group</span>
+        <span class="nav-logo-sub">Build · Design · Consult</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="divisions.html">Divisions</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html" class="nav-cta active" style="background:var(--blue-mid);">Contact Us</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <ul class="mobile-nav-links">
+      <li><a href="index.html#about" onclick="closeMobileNav()">About</a></li>
+      <li><a href="services.html" onclick="closeMobileNav()">Services</a></li>
+      <li><a href="divisions.html" onclick="closeMobileNav()">Divisions</a></li>
+      <li><a href="projects.html" onclick="closeMobileNav()">Projects</a></li>
+      <li><a href="contact.html" onclick="closeMobileNav()">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-inner">
+        <div class="breadcrumb reveal">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <span class="breadcrumb-current">Contact</span>
+        </div>
+        <span class="label reveal">Get In Touch</span>
+        <h1 class="reveal reveal-delay-1">Let's Start Building<br/>Together.</h1>
+        <p class="reveal reveal-delay-2">Whether you have a project in mind or simply want to explore possibilities — we'd love to hear from you. Reach out and let's create something remarkable.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- INFO COLUMN -->
+        <div>
+          <span class="label reveal">Contact Information</span>
+          <h2 class="reveal reveal-delay-1">Reach Out to<br/>NVD Group</h2>
+          <div class="divider reveal reveal-delay-1"></div>
+          <p class="reveal reveal-delay-2">Our team is based in Amravati, Maharashtra, and available to discuss your project needs — from residential construction to comprehensive project management consulting.</p>
+
+          <div class="contact-detail reveal reveal-delay-2" style="margin-top:2.5rem;">
+            <div class="contact-detail-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="contact-detail-title">Registered Address</div>
+              <div class="contact-detail-value">NVD Builders &amp; Developers<br/>186, AMC 50/91, Frezarpura<br/>Amravati, Maharashtra — 444602</div>
+            </div>
+          </div>
+
+          <div class="contact-detail reveal reveal-delay-2">
+            <div class="contact-detail-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="contact-detail-title">Email</div>
+              <div class="contact-detail-value"><a href="mailto:freelance.nvd@gmail.com">freelance.nvd@gmail.com</a></div>
+            </div>
+          </div>
+
+          <div class="contact-detail reveal reveal-delay-3">
+            <div class="contact-detail-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div>
+              <div class="contact-detail-title">Website</div>
+              <div class="contact-detail-value"><a href="http://www.nvdgroup.net" target="_blank" rel="noopener">www.nvdgroup.net</a></div>
+            </div>
+          </div>
+
+          <!-- SOCIAL -->
+          <div class="social-section reveal reveal-delay-3">
+            <div class="social-label">Follow Naved Akram</div>
+            <div class="social-links">
+              <a href="https://www.facebook.com" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+                <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                Facebook
+              </a>
+              <a href="https://www.instagram.com" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+                <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                Instagram
+              </a>
+              <a href="https://www.linkedin.com/in/navedakram/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                LinkedIn
+              </a>
+              <a href="https://www.youtube.com" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
+                <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+                YouTube
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- FORM COLUMN -->
+        <div class="contact-form-wrap reveal reveal-delay-1">
+          <div id="formContent">
+            <div class="form-title">Send Us a Message</div>
+            <p class="form-subtitle">Fill in the form below and we'll get back to you within 24 hours.</p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">First Name <span style="color:#c0392b">*</span></label>
+                <input type="text" id="fname" placeholder="Your first name" />
+                <div class="form-error-msg" id="err-fname">Please enter your first name.</div>
+              </div>
+              <div class="form-group">
+                <label for="lname">Last Name <span style="color:#c0392b">*</span></label>
+                <input type="text" id="lname" placeholder="Your last name" />
+                <div class="form-error-msg" id="err-lname">Please enter your last name.</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address <span style="color:#c0392b">*</span></label>
+              <input type="email" id="email" placeholder="your@email.com" />
+              <div class="form-error-msg" id="err-email">Please enter a valid email address.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" placeholder="+91 00000 00000" />
+            </div>
+
+            <div class="form-group">
+              <label for="service">Service Interest <span style="color:#c0392b">*</span></label>
+              <select id="service">
+                <option value="">Select a service…</option>
+                <optgroup label="Construction">
+                  <option value="construction-residential">Construction — Residential (House / Bungalow / Villa)</option>
+                  <option value="construction-highrise">Construction — High Rise / Apartments</option>
+                  <option value="construction-industrial">Construction — Industrial / Factory</option>
+                  <option value="construction-development">Site Development</option>
+                </optgroup>
+                <optgroup label="Project Management">
+                  <option value="pmc-full">Full Project Management Consultancy</option>
+                  <option value="pmc-planning">Planning &amp; Scheduling</option>
+                  <option value="pmc-cost">Cost Analysis &amp; Control</option>
+                  <option value="pmc-feasibility">Project Feasibility Study</option>
+                  <option value="pmc-value">Value Engineering</option>
+                </optgroup>
+                <optgroup label="Interior Design">
+                  <option value="interio-home">Home Interior Design &amp; Build</option>
+                  <option value="interio-office">Office Interior Design &amp; Build</option>
+                  <option value="interio-kitchen">Modular Kitchen</option>
+                  <option value="interio-wardrobe">Modular Wardrobes</option>
+                  <option value="interio-landscape">Landscaping</option>
+                  <option value="interio-furniture">Custom Furniture</option>
+                </optgroup>
+                <option value="other">Other / Multiple Services</option>
+              </select>
+              <div class="form-error-msg" id="err-service">Please select a service.</div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="budget">Budget Range</label>
+                <select id="budget">
+                  <option value="">Select a range…</option>
+                  <option>Under ₹10 Lakhs</option>
+                  <option>₹10 – 25 Lakhs</option>
+                  <option>₹25 – 50 Lakhs</option>
+                  <option>₹50 Lakhs – 1 Crore</option>
+                  <option>Above ₹1 Crore</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="timeline">Project Timeline</label>
+                <select id="timeline">
+                  <option value="">When do you need to start?</option>
+                  <option>Immediately</option>
+                  <option>Within 1–3 months</option>
+                  <option>3–6 months from now</option>
+                  <option>More than 6 months away</option>
+                  <option>Still planning</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Tell Us About Your Project <span style="color:#c0392b">*</span></label>
+              <textarea id="message" placeholder="Describe your project, location, requirements, and any specific questions you have for the team…"></textarea>
+              <div class="form-error-msg" id="err-message">Please describe your project.</div>
+            </div>
+
+            <button class="form-submit" type="button" id="submitBtn" onclick="handleSubmit()">Send Message</button>
+          </div>
+
+          <!-- SUCCESS STATE -->
+          <div class="form-success" id="formSuccess">
+            <div class="form-success-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3>Message Received!</h3>
+            <p>Thank you for reaching out. The NVD Group team will review your enquiry and get back to you within 24 hours.</p>
+            <p style="margin-top:1rem;font-size:0.85rem;color:var(--grey);">For urgent enquiries, you can also email us directly at <a href="mailto:freelance.nvd@gmail.com" style="color:var(--blue);">freelance.nvd@gmail.com</a></p>
+            <button onclick="resetForm()" style="margin-top:2rem;background:transparent;color:var(--blue);border:1px solid var(--blue);padding:0.7rem 1.5rem;font-size:0.82rem;font-weight:600;cursor:pointer;letter-spacing:0.04em;font-family:'DM Sans',sans-serif;">Send Another Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION STRIP -->
+  <div class="location-strip">
+    <div class="location-strip-inner">
+      <div class="loc-item reveal">
+        <div class="loc-item-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="loc-item-title">Headquarters</div>
+        <p class="loc-item-value">186, AMC 50/91, Frezarpura<br/>Amravati, Maharashtra<br/>India — 444602</p>
+      </div>
+      <div class="loc-item reveal reveal-delay-1">
+        <div class="loc-item-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="loc-item-title">Email Us</div>
+        <p class="loc-item-value"><a href="mailto:freelance.nvd@gmail.com">freelance.nvd@gmail.com</a><br/><br/>Response within 24 hours</p>
+      </div>
+      <div class="loc-item reveal reveal-delay-2">
+        <div class="loc-item-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="loc-item-title">Online</div>
+        <p class="loc-item-value"><a href="http://www.nvdgroup.net" target="_blank" rel="noopener">www.nvdgroup.net</a><br/><br/>Projects across India,<br/>UAE &amp; Saudi Arabia</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">NVD Group</div>
+          <div class="footer-brand-sub">Build · Design · Consult</div>
+          <p class="footer-brand-desc">A multi-disciplinary construction, interior design, and project management consultancy headquartered in Amravati, Maharashtra.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Divisions</div>
+          <ul class="footer-links">
+            <li><a href="divisions.html#builders">NVD Builders &amp; Developers</a></li>
+            <li><a href="divisions.html#consulting">NVD Freelancing &amp; Consultants</a></li>
+            <li><a href="divisions.html#interio">NVD Interio</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Services</div>
+          <ul class="footer-links">
+            <li><a href="services.html#construction">Construction</a></li>
+            <li><a href="services.html#consulting">Project Management</a></li>
+            <li><a href="services.html#interiors">Interior Design</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Connect</div>
+          <ul class="footer-links">
+            <li><a href="mailto:freelance.nvd@gmail.com">freelance.nvd@gmail.com</a></li>
+            <li><a href="http://www.nvdgroup.net" target="_blank" rel="noopener">www.nvdgroup.net</a></li>
+            <li><a href="https://www.linkedin.com/in/navedakram/" target="_blank" rel="noopener">LinkedIn: /navedakram</a></li>
+            <li><a href="https://www.facebook.com" target="_blank" rel="noopener">@Naved Akram NVD</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 NVD Group. All rights reserved.</p>
+        <ul class="footer-bottom-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // NAV
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); });
+    const toggle = document.getElementById('navToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    toggle.addEventListener('click', () => { mobileNav.classList.toggle('open'); });
+    function closeMobileNav() { mobileNav.classList.remove('open'); }
+
+    // REVEAL
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // FORM VALIDATION & SUBMISSION
+    function validate() {
+      let valid = true;
+      const checks = [
+        { id: 'fname', errId: 'err-fname', test: v => v.trim().length > 0 },
+        { id: 'lname', errId: 'err-lname', test: v => v.trim().length > 0 },
+        { id: 'email', errId: 'err-email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+        { id: 'service', errId: 'err-service', test: v => v !== '' },
+        { id: 'message', errId: 'err-message', test: v => v.trim().length > 10 },
+      ];
+      checks.forEach(({ id, errId, test }) => {
+        const el = document.getElementById(id);
+        const errEl = document.getElementById(errId);
+        const ok = test(el.value);
+        el.classList.toggle('error', !ok);
+        errEl.classList.toggle('visible', !ok);
+        if (!ok) valid = false;
+      });
+      return valid;
+    }
+
+    // Clear error on input
+    ['fname','lname','email','service','message'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('input', () => {
+        el.classList.remove('error');
+        const errEl = document.getElementById('err-' + id);
+        if (errEl) errEl.classList.remove('visible');
+      });
+    });
+
+    function handleSubmit() {
+      if (!validate()) return;
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      // Simulate form submission (replace with real endpoint as needed)
+      setTimeout(() => {
+        document.getElementById('formContent').style.display = 'none';
+        document.getElementById('formSuccess').classList.add('visible');
+      }, 1200);
+    }
+
+    function resetForm() {
+      document.getElementById('formContent').style.display = 'block';
+      document.getElementById('formSuccess').classList.remove('visible');
+      document.getElementById('submitBtn').disabled = false;
+      document.getElementById('submitBtn').textContent = 'Send Message';
+      ['fname','lname','email','phone','service','budget','timeline','message'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+    }
+  </script>
+</body>
+</html>

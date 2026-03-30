@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NVD Group — Builders, Developers & Interiors</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f8f8f6;
+      color: #1a1a2e;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── CSS VARIABLES ── */
+    :root {
+      --navy: #0d2461;
+      --blue: #1a3fa8;
+      --blue-mid: #2952c8;
+      --blue-light: #e8edf8;
+      --white: #ffffff;
+      --off-white: #f8f8f6;
+      --grey-light: #f0f0ed;
+      --grey: #8a8a8a;
+      --grey-dark: #4a4a4a;
+      --ink: #1a1a2e;
+      --border: rgba(13, 36, 97, 0.12);
+      --shadow: 0 4px 32px rgba(13, 36, 97, 0.10);
+      --shadow-hover: 0 12px 48px rgba(13, 36, 97, 0.18);
+      --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* ── TYPOGRAPHY ── */
+    h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.18; }
+    h1 { font-size: clamp(2.8rem, 6vw, 5.2rem); font-weight: 700; }
+    h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 600; }
+    h3 { font-size: clamp(1.2rem, 2.5vw, 1.55rem); font-weight: 600; }
+    p { font-size: 1rem; color: var(--grey-dark); line-height: 1.75; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── UTILITY ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .section { padding: 6rem 0; }
+    .section-sm { padding: 4rem 0; }
+    .label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .divider {
+      width: 3rem; height: 3px;
+      background: var(--blue);
+      margin: 1.5rem 0;
+    }
+    .divider-center { margin: 1.5rem auto; }
+    .text-center { text-align: center; }
+    .blue { color: var(--blue); }
+
+    /* ── FADE-IN ANIMATION ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ══════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(248, 248, 246, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .nav.scrolled {
+      background: rgba(255,255,255,0.98);
+      box-shadow: 0 2px 24px rgba(13,36,97,0.08);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .nav-logo-main {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.02em;
+    }
+    .nav-logo-sub {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.4rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--grey-dark);
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 2px;
+      background: var(--blue);
+      transform: scaleX(0);
+      transition: transform var(--transition);
+    }
+    .nav-links a:hover { color: var(--navy); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta {
+      background: var(--navy);
+      color: var(--white) !important;
+      padding: 0.6rem 1.4rem;
+      border-radius: 2px;
+      font-size: 0.8rem !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.04em;
+      transition: background var(--transition) !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--blue-mid) !important; color: #fff !important; }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--navy);
+      transition: var(--transition);
+    }
+
+    /* ══════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--white);
+      padding-top: 72px;
+    }
+    .hero-bg-lines {
+      position: absolute;
+      top: 0; right: 0;
+      width: 55%;
+      height: 100%;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 60px,
+          rgba(13,36,97,0.04) 60px,
+          rgba(13,36,97,0.04) 61px
+        );
+      pointer-events: none;
+    }
+    .hero-bg-accent {
+      position: absolute;
+      top: 0; right: 0;
+      width: 50%;
+      height: 100%;
+      background: var(--blue-light);
+      clip-path: polygon(8% 0%, 100% 0%, 100% 100%, 0% 100%);
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 5rem 2rem 5rem 3rem;
+      max-width: 600px;
+    }
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow-line {
+      width: 2.5rem; height: 2px;
+      background: var(--blue);
+    }
+    .hero-eyebrow-text {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+    .hero h1 {
+      color: var(--navy);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 span { color: var(--blue-mid); }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--grey-dark);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--navy);
+      color: var(--white);
+      padding: 0.9rem 2rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      border: 2px solid var(--navy);
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      background: var(--blue-mid);
+      border-color: var(--blue-mid);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--navy);
+      padding: 0.9rem 2rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      border: 2px solid var(--navy);
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-block;
+    }
+    .btn-outline:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 3.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .hero-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-top: 0.3rem;
+    }
+    .hero-image-panel {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      min-height: 600px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-image-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 0;
+    }
+    .founder-img {
+      width: auto;
+      max-width: 90%;
+      height: 88vh;
+      max-height: 720px;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      filter: contrast(1.02);
+    }
+    .hero-image-caption {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 2rem;
+      background: var(--white);
+      padding: 1rem 1.5rem;
+      border-left: 3px solid var(--blue);
+      box-shadow: var(--shadow);
+    }
+    .hero-image-caption strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--navy);
+    }
+    .hero-image-caption span {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    /* ══════════════════════════════════════════
+       VALUES STRIP
+    ══════════════════════════════════════════ */
+    .values-strip {
+      background: var(--navy);
+      padding: 3rem 0;
+    }
+    .values-strip-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .value-item {
+      padding: 1rem 2rem;
+      border-right: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .value-item:last-child { border-right: none; }
+    .value-icon {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .value-icon svg { fill: var(--white); }
+    .value-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 0.25rem;
+    }
+    .value-desc {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+    }
+
+    /* ══════════════════════════════════════════
+       ABOUT
+    ══════════════════════════════════════════ */
+    .about {
+      background: var(--white);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .about-image-wrap {
+      position: relative;
+    }
+    .about-img-bg {
+      position: absolute;
+      top: 1.5rem; left: 1.5rem;
+      right: -1.5rem; bottom: -1.5rem;
+      background: var(--blue-light);
+      z-index: 0;
+    }
+    .about-img-main {
+      position: relative; z-index: 1;
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      object-position: top center;
+      filter: grayscale(8%);
+    }
+    .about-badge {
+      position: absolute;
+      z-index: 2;
+      bottom: -1.5rem;
+      right: -1.5rem;
+      background: var(--blue);
+      color: var(--white);
+      padding: 1.5rem;
+      text-align: center;
+      min-width: 130px;
+    }
+    .about-badge-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .about-badge-text {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 0.35rem;
+      opacity: 0.9;
+    }
+    .about-content h2 { margin-bottom: 1rem; }
+    .about-content p { margin-bottom: 1.2rem; }
+    .about-countries {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .country-tag {
+      background: var(--blue-light);
+      color: var(--navy);
+      padding: 0.4rem 1rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+    }
+
+    /* ══════════════════════════════════════════
+       SERVICES
+    ══════════════════════════════════════════ */
+    .services {
+      background: var(--off-white);
+    }
+    .services-head { text-align: center; margin-bottom: 4rem; }
+    .services-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 3rem;
+      border: 1px solid var(--border);
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .tab-btn {
+      padding: 0.75rem 2rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--border);
+      cursor: pointer;
+      color: var(--grey);
+      transition: var(--transition);
+    }
+    .tab-btn:last-child { border-right: none; }
+    .tab-btn.active {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .tab-btn:hover:not(.active) {
+      background: var(--blue-light);
+      color: var(--navy);
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5px;
+      background: var(--border);
+    }
+    .service-card {
+      background: var(--white);
+      padding: 2.5rem 2rem;
+      transition: var(--transition);
+      cursor: default;
+    }
+    .service-card:hover {
+      background: var(--navy);
+      transform: translateY(-2px);
+    }
+    .service-card:hover .service-card-icon svg { fill: var(--white); }
+    .service-card:hover .service-card-title { color: var(--white); }
+    .service-card:hover .service-card-desc { color: rgba(255,255,255,0.7); }
+    .service-card-icon {
+      width: 44px; height: 44px;
+      margin-bottom: 1.5rem;
+    }
+    .service-card-icon svg { fill: var(--blue); transition: var(--transition); }
+    .service-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+      transition: color var(--transition);
+    }
+    .service-card-desc {
+      font-size: 0.82rem;
+      color: var(--grey);
+      line-height: 1.65;
+      transition: color var(--transition);
+    }
+
+    /* ══════════════════════════════════════════
+       ENTITIES / THREE COMPANIES
+    ══════════════════════════════════════════ */
+    .entities { background: var(--white); }
+    .entities-head { text-align: center; margin-bottom: 4rem; }
+    .entities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+    }
+    .entity-card {
+      background: var(--white);
+      padding: 3rem 2.5rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .entity-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 0;
+      background: var(--blue);
+      transition: height 0.5s ease;
+    }
+    .entity-card:hover::before { height: 100%; }
+    .entity-card:hover { background: var(--blue-light); }
+    .entity-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      color: var(--blue-light);
+      line-height: 1;
+      margin-bottom: 1rem;
+      transition: color var(--transition);
+    }
+    .entity-card:hover .entity-num { color: rgba(26,63,168,0.15); }
+    .entity-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+    .entity-desc {
+      font-size: 0.875rem;
+      color: var(--grey-dark);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+    .entity-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .entity-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: var(--blue-light);
+      padding: 0.3rem 0.7rem;
+      border: 1px solid rgba(26,63,168,0.15);
+    }
+
+    /* ══════════════════════════════════════════
+       PROJECTS
+    ══════════════════════════════════════════ */
+    .projects { background: var(--off-white); }
+    .projects-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .projects-filters {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 0.5rem 1.2rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--grey);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--white);
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 1px 4px rgba(13,36,97,0.06);
+      transition: var(--transition);
+    }
+    .project-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); }
+    .project-card-img {
+      width: 100%;
+      height: 230px;
+      background: var(--blue-light);
+      overflow: hidden;
+      position: relative;
+    }
+    .project-card-img-inner {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.6s ease;
+    }
+    .project-card:hover .project-card-img-inner { transform: scale(1.06); }
+    .project-card-body { padding: 1.5rem; }
+    .project-card-cat {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.4rem;
+    }
+    .project-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--navy);
+    }
+    .project-card-loc {
+      font-size: 0.78rem;
+      color: var(--grey);
+      margin-top: 0.3rem;
+    }
+
+    /* Project placeholder visuals using CSS */
+    .proj-bg-1 { background: linear-gradient(135deg, #c8d4f0 0%, #a8bae8 100%); }
+    .proj-bg-2 { background: linear-gradient(135deg, #d4e0f0 0%, #b0c4e8 100%); }
+    .proj-bg-3 { background: linear-gradient(135deg, #bfcfe8 0%, #9ab2d8 100%); }
+    .proj-bg-4 { background: linear-gradient(135deg, #d0daf0 0%, #a8badc 100%); }
+    .proj-bg-5 { background: linear-gradient(135deg, #c4d2ec 0%, #a0b6dc 100%); }
+    .proj-bg-6 { background: linear-gradient(135deg, #ccd8f0 0%, #b0c4e4 100%); }
+
+    /* Architectural line patterns inside project images */
+    .proj-pattern {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .proj-pattern svg { opacity: 0.35; }
+
+    /* ══════════════════════════════════════════
+       WHY CHOOSE US
+    ══════════════════════════════════════════ */
+    .why {
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+    .why::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px; height: 600px;
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 50%;
+    }
+    .why::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 400px; height: 400px;
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+    .why-inner {
+      position: relative; z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .why-content h2 { color: var(--white); margin-bottom: 1rem; }
+    .why-content .label { color: rgba(255,255,255,0.55); }
+    .why-content .divider { background: rgba(255,255,255,0.3); }
+    .why-content p { color: rgba(255,255,255,0.75); margin-bottom: 1rem; }
+    .why-points {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .why-point {
+      padding: 1.75rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: var(--transition);
+    }
+    .why-point:hover { background: rgba(255,255,255,0.09); }
+    .why-point-icon {
+      width: 32px; height: 32px;
+      margin-bottom: 0.75rem;
+    }
+    .why-point-icon svg { fill: rgba(255,255,255,0.7); }
+    .why-point-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.975rem;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+    .why-point-desc {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.65;
+    }
+
+    /* ══════════════════════════════════════════
+       CTA BANNER
+    ══════════════════════════════════════════ */
+    .cta-banner {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .cta-banner-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .cta-banner h2 { color: var(--navy); }
+    .cta-banner p { color: var(--grey-dark); margin-top: 0.5rem; }
+    .cta-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    /* ══════════════════════════════════════════
+       CONTACT
+    ══════════════════════════════════════════ */
+    .contact { background: var(--off-white); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contact-info h2 { margin-bottom: 0.75rem; }
+    .contact-info p { margin-bottom: 2rem; }
+    .contact-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .contact-detail-icon {
+      width: 40px; height: 40px;
+      background: var(--blue-light);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-detail-icon svg { fill: var(--blue); }
+    .contact-detail-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 0.2rem;
+    }
+    .contact-detail-value {
+      font-size: 0.925rem;
+      color: var(--navy);
+      font-weight: 500;
+    }
+    .social-links {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+    .social-link {
+      width: 40px; height: 40px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--navy);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      transition: var(--transition);
+    }
+    .social-link:hover {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+    .contact-form-wrap {
+      background: var(--white);
+      padding: 3rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .form-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--navy);
+      margin-bottom: 2rem;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 0.45rem;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--ink);
+      background: var(--off-white);
+      border: 1px solid var(--border);
+      outline: none;
+      transition: border-color var(--transition);
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--blue);
+      background: var(--white);
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-submit {
+      width: 100%;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      padding: 1rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .form-submit:hover { background: var(--blue-mid); }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    .footer {
+      background: var(--ink);
+      padding: 4rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+    .footer-brand-sub {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 1rem;
+    }
+    .footer-brand-desc {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+      max-width: 280px;
+    }
+    .footer-col-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 1.25rem;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 0.6rem; }
+    .footer-links a {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-bottom p {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .footer-bottom-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .footer-bottom-links a {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+      transition: color var(--transition);
+    }
+    .footer-bottom-links a:hover { color: rgba(255,255,255,0.7); }
+
+    /* ══════════════════════════════════════════
+       MOBILE NAV
+    ══════════════════════════════════════════ */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 72px; left: 0; right: 0;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 8px 24px rgba(13,36,97,0.1);
+      z-index: 99;
+      padding: 1rem 0;
+    }
+    .mobile-nav.open { display: block; }
+    .mobile-nav-links {
+      list-style: none;
+      padding: 0 2rem;
+    }
+    .mobile-nav-links li { border-bottom: 1px solid var(--border); }
+    .mobile-nav-links li:last-child { border: none; }
+    .mobile-nav-links a {
+      display: block;
+      padding: 0.9rem 0;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--navy);
+    }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-bg-accent { display: none; }
+      .hero-image-panel { display: none; }
+      .hero-content { padding: 4rem 2rem; max-width: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-image-wrap { display: none; }
+      .entities-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .why-inner { grid-template-columns: 1fr; gap: 3rem; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .values-strip-inner { grid-template-columns: 1fr; }
+      .value-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.12); }
+      .value-item:last-child { border-bottom: none; }
+      .entities-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .services-tabs { flex-wrap: wrap; border: none; gap: 0.5rem; }
+      .tab-btn { border: 1px solid var(--border); }
+      .why-points { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+      .contact-form-wrap { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══ -->
+  <nav class="nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" aria-label="NVD Group Home">
+        <span class="nav-logo-main">NVD Group</span>
+        <span class="nav-logo-sub">Build · Design · Consult</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#divisions">Divisions</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <ul class="mobile-nav-links">
+      <li><a href="#about" onclick="closeMobileNav()">About</a></li>
+      <li><a href="#services" onclick="closeMobileNav()">Services</a></li>
+      <li><a href="#divisions" onclick="closeMobileNav()">Divisions</a></li>
+      <li><a href="#projects" onclick="closeMobileNav()">Projects</a></li>
+      <li><a href="#contact" onclick="closeMobileNav()">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero" id="home">
+    <div class="hero-bg-accent"></div>
+    <div class="hero-bg-lines"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow reveal">
+        <span class="hero-eyebrow-line"></span>
+        <span class="hero-eyebrow-text">Amravati, Maharashtra</span>
+      </div>
+      <h1 class="reveal reveal-delay-1">
+        Building Dreams,<br/>
+        <span>Crafting Spaces.</span>
+      </h1>
+      <p class="hero-desc reveal reveal-delay-2">
+        NVD Group is a multi-disciplinary real estate and design collective
+        specialising in construction, interior design, and project management
+        consultancy — delivering exceptional outcomes across India and the Middle East.
+      </p>
+      <div class="hero-actions reveal reveal-delay-3">
+        <a href="#projects" class="btn-primary">View Our Work</a>
+        <a href="#contact" class="btn-outline">Get In Touch</a>
+      </div>
+      <div class="hero-stats reveal reveal-delay-4">
+        <div>
+          <div class="hero-stat-num">3</div>
+          <div class="hero-stat-label">Specialized Divisions</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">3+</div>
+          <div class="hero-stat-label">Countries of Operations</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-label">Client Satisfaction Focus</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-image-panel">
+      <div class="hero-image-container">
+        <!-- Using a CSS-rendered professional portrait placeholder since PDF images aren't extractable -->
+        <svg class="founder-img" viewBox="0 0 420 680" xmlns="http://www.w3.org/2000/svg">
+          <rect width="420" height="680" fill="#e8edf8"/>
+          <!-- Suit body -->
+          <rect x="80" y="340" width="260" height="340" rx="8" fill="#1a1a2e"/>
+          <!-- Shirt/tie area -->
+          <rect x="165" y="340" width="90" height="220" fill="#1a3fa8"/>
+          <polygon points="210,365 195,400 210,390 225,400" fill="#0d2461"/>
+          <!-- Neck -->
+          <rect x="185" y="280" width="50" height="70" fill="#c8a882"/>
+          <!-- Head -->
+          <ellipse cx="210" cy="240" rx="70" ry="80" fill="#c8a882"/>
+          <!-- Hair -->
+          <ellipse cx="210" cy="175" rx="68" ry="40" fill="#1a1a1a"/>
+          <rect x="142" y="175" width="136" height="30" fill="#1a1a1a"/>
+          <!-- Face details -->
+          <ellipse cx="185" cy="240" rx="9" ry="11" fill="#fff" opacity="0.9"/>
+          <ellipse cx="235" cy="240" rx="9" ry="11" fill="#fff" opacity="0.9"/>
+          <ellipse cx="185" cy="241" rx="5" ry="6" fill="#4a3020"/>
+          <ellipse cx="235" cy="241" rx="5" ry="6" fill="#4a3020"/>
+          <!-- Mustache -->
+          <path d="M 192 262 Q 210 270 228 262" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <!-- Arms -->
+          <rect x="30" y="350" width="70" height="230" rx="12" fill="#1a1a2e"/>
+          <rect x="320" y="350" width="70" height="230" rx="12" fill="#1a1a2e"/>
+          <!-- Hands -->
+          <ellipse cx="65" cy="590" rx="30" ry="18" fill="#c8a882"/>
+          <ellipse cx="355" cy="590" rx="30" ry="18" fill="#c8a882"/>
+          <!-- Collar -->
+          <polygon points="165,340 210,380 165,400" fill="#f0f0f0"/>
+          <polygon points="255,340 210,380 255,400" fill="#f0f0f0"/>
+          <!-- Lapels -->
+          <polygon points="140,340 165,340 165,400 120,450" fill="#252540"/>
+          <polygon points="280,340 255,340 255,400 300,450" fill="#252540"/>
+        </svg>
+        <div class="hero-image-caption">
+          <strong>Naved Akram</strong>
+          <span>Founder &amp; Think Tank · NVD Group</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ VALUES STRIP ══ -->
+  <div class="values-strip">
+    <div class="values-strip-inner">
+      <div class="value-item reveal">
+        <div class="value-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div>
+          <div class="value-title">Knowledge</div>
+          <p class="value-desc">Organizing, creating, and sharing collective wisdom to drive business success.</p>
+        </div>
+      </div>
+      <div class="value-item reveal reveal-delay-1">
+        <div class="value-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm3-13H9v2h2v4H9v2h6v-2h-2V9h2V7z"/></svg>
+        </div>
+        <div>
+          <div class="value-title">Creativity</div>
+          <p class="value-desc">Creative solutions and fresh perspectives for today's complex challenges.</p>
+        </div>
+      </div>
+      <div class="value-item reveal reveal-delay-2">
+        <div class="value-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        </div>
+        <div>
+          <div class="value-title">Sustainability</div>
+          <p class="value-desc">Collaborative approaches and innovative solutions to sustain and grow.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ABOUT ══ -->
+  <section class="about section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image-wrap">
+          <div class="about-img-bg"></div>
+          <!-- Styled portrait using SVG for the about section -->
+          <svg class="about-img-main" viewBox="0 0 400 520" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="520" fill="#d0daf0"/>
+            <!-- Office environment -->
+            <rect x="0" y="300" width="400" height="220" fill="#c8d4e8"/>
+            <rect x="30" y="200" width="120" height="180" rx="4" fill="#a8bcd8"/>
+            <rect x="250" y="180" width="100" height="200" rx="4" fill="#9aaece"/>
+            <!-- Desk -->
+            <rect x="60" y="350" width="280" height="10" rx="2" fill="#8090b0"/>
+            <!-- Figure in suit -->
+            <rect x="150" y="230" width="100" height="200" rx="6" fill="#1a1a2e"/>
+            <rect x="175" y="230" width="50" height="130" fill="#1a3fa8"/>
+            <rect x="170" y="180" width="60" height="60" fill="#c8a882"/>
+            <ellipse cx="200" cy="160" rx="45" ry="50" fill="#c8a882"/>
+            <ellipse cx="200" cy="120" rx="44" ry="25" fill="#1a1a1a"/>
+            <rect x="156" y="120" width="88" height="20" fill="#1a1a1a"/>
+            <!-- Arm on desk -->
+            <rect x="120" y="310" width="55" height="50" rx="10" fill="#1a1a2e"/>
+            <ellipse cx="120" cy="360" rx="20" ry="14" fill="#c8a882"/>
+            <!-- Clock/calendar on wall -->
+            <circle cx="320" cy="100" r="35" fill="none" stroke="#8090b0" stroke-width="3"/>
+            <line x1="320" y1="75" x2="320" y2="100" stroke="#1a1a2e" stroke-width="2"/>
+            <line x1="320" y1="100" x2="340" y2="110" stroke="#1a1a2e" stroke-width="2"/>
+          </svg>
+          <div class="about-badge">
+            <div class="about-badge-num">10+</div>
+            <div class="about-badge-text">Years of expertise</div>
+          </div>
+        </div>
+
+        <div class="about-content">
+          <span class="label reveal">The Think Tank</span>
+          <h2 class="reveal reveal-delay-1">A Vision Born From Courage &amp; Craft</h2>
+          <div class="divider reveal reveal-delay-1"></div>
+          <p class="reveal reveal-delay-2">
+            Founded by <strong>Naved Akram</strong> — a Civil Engineer with an MBA in Construction Management — NVD Group
+            was born from a deliberate step away from corporate certainty and toward entrepreneurial purpose.
+          </p>
+          <p class="reveal reveal-delay-2">
+            After leaving his mark on projects across India, Saudi Arabia, and Dubai, Naved returned home to Amravati
+            and founded NVD Group: three specialized companies united by a shared commitment to quality, innovation,
+            and lasting client relationships.
+          </p>
+          <p class="reveal reveal-delay-3">
+            Today, NVD Group is a growing collective of problem solvers, creative thinkers, and solution providers —
+            offering a complete project lifecycle service from feasibility study to finishing touch.
+          </p>
+          <div class="about-countries reveal reveal-delay-3">
+            <span class="country-tag">India</span>
+            <span class="country-tag">UAE</span>
+            <span class="country-tag">Saudi Arabia</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SERVICES ══ -->
+  <section class="services section" id="services">
+    <div class="container">
+      <div class="services-head">
+        <span class="label reveal">What We Offer</span>
+        <h2 class="reveal reveal-delay-1">One Group, Every Project Need</h2>
+        <p class="reveal reveal-delay-2" style="max-width:560px;margin:0 auto;margin-top:0.75rem;">
+          From feasibility studies to final handover — NVD Group covers every stage of your project with precision and care.
+        </p>
+      </div>
+
+      <div class="services-tabs reveal">
+        <button class="tab-btn active" data-tab="construction">Construction</button>
+        <button class="tab-btn" data-tab="consulting">Consulting</button>
+        <button class="tab-btn" data-tab="interiors">Interiors</button>
+      </div>
+
+      <!-- Construction Tab -->
+      <div class="tab-panel active" id="tab-construction">
+        <div class="services-grid">
+          <div class="service-card reveal">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="service-card-title">Houses &amp; Bungalows</div>
+            <p class="service-card-desc">Bespoke 2–5 BHK homes crafted with precision and individual character.</p>
+          </div>
+          <div class="service-card reveal reveal-delay-1">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+            </div>
+            <div class="service-card-title">Duplex &amp; Row Houses</div>
+            <p class="service-card-desc">Stylish duplex and row house developments balancing community and privacy.</p>
+          </div>
+          <div class="service-card reveal reveal-delay-2">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="13" y2="15"/></svg>
+            </div>
+            <div class="service-card-title">High Rise Buildings</div>
+            <p class="service-card-desc">Multi-storey residential and mixed-use developments built to last.</p>
+          </div>
+          <div class="service-card reveal reveal-delay-3">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><path d="M2 20h20M4 20V8l8-6 8 6v12M10 20v-6h4v6"/></svg>
+            </div>
+            <div class="service-card-title">Industrial Sheds &amp; Factories</div>
+            <p class="service-card-desc">Robust industrial construction built for performance and efficiency.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Consulting Tab -->
+      <div class="tab-panel" id="tab-consulting">
+        <div class="services-grid">
+          <div class="service-card reveal">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <div class="service-card-title">Project Management</div>
+            <p class="service-card-desc">End-to-end management from initiation through closure with full accountability.</p>
+          </div>
+          <div class="service-card reveal reveal-delay-1">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="service-card-title">Cost Analysis &amp; Control</div>
+            <p class="service-card-desc">Detailed cost estimation, budgeting, and rigorous monitoring throughout.</p>
+          </div>
+          <div class="service-card reveal reveal-delay-2">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="service-card-title">Planning &amp; Scheduling</div>
+            <p class="service-card-desc">Detailed project plans, milestone tracking and timeline optimisation.</p>
+          </div>
+          <div class="service-card reveal reveal-delay-3">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="service-card-title">Value Engineering</div>
+            <p class="service-card-desc">Maximising project value while managing scope, cost, and quality objectives.</p>
+          </div>
+          <div class="service-card reveal">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div class="service-card-title">Project Feasibility</div>
+            <p class="service-card-desc">Thorough feasibility studies to set your project on the right path from day one.</p>
+          </div>
+          <div class="service-card reveal reveal-delay-1">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="service-card-title">Financial Advisory</div>
+            <p class="service-card-desc">Strategic financial counsel to align project goals with long-term business growth.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interiors Tab -->
+      <div class="tab-panel" id="tab-interiors">
+        <div class="services-grid">
+          <div class="service-card reveal">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="service-card-title">Home Interior Design</div>
+            <p class="service-card-desc">Complete residential interiors that reflect your lifestyle and personality.</p>
+          </div>
+          <div class="service-card reveal reveal-delay-1">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="17"/><line x1="9" y1="14.5" x2="15" y2="14.5"/></svg>
+            </div>
+            <div class="service-card-title">Office Interiors</div>
+            <p class="service-card-desc">Productive and inspiring commercial workspaces designed for modern teams.</p>
+          </div>
+          <div class="service-card reveal reveal-delay-2">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+            </div>
+            <div class="service-card-title">Modular Kitchens</div>
+            <p class="service-card-desc">Precision-crafted modular kitchens merging elegance with everyday efficiency.</p>
+          </div>
+          <div class="service-card reveal reveal-delay-3">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
+            <div class="service-card-title">Modular Wardrobes</div>
+            <p class="service-card-desc">Custom wardrobe solutions maximising space with refined, functional design.</p>
+          </div>
+          <div class="service-card reveal">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><path d="M6 22V11a6 6 0 0 1 12 0v11"/><path d="M6 14h12"/></svg>
+            </div>
+            <div class="service-card-title">Landscaping</div>
+            <p class="service-card-desc">Thoughtful outdoor and landscape design that extends living spaces beautifully.</p>
+          </div>
+          <div class="service-card reveal reveal-delay-1">
+            <div class="service-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            </div>
+            <div class="service-card-title">Custom Furniture</div>
+            <p class="service-card-desc">Bespoke furniture crafted to fit your exact space, taste, and requirements.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ DIVISIONS ══ -->
+  <section class="entities section" id="divisions">
+    <div class="container">
+      <div class="entities-head">
+        <span class="label reveal">Our Three Divisions</span>
+        <h2 class="reveal reveal-delay-1">Specialized. Unified. Complete.</h2>
+        <div class="divider divider-center reveal reveal-delay-1"></div>
+      </div>
+      <div class="entities-grid">
+        <div class="entity-card reveal">
+          <div class="entity-num">01</div>
+          <h3 class="entity-name">NVD Builders &amp; Developers</h3>
+          <p class="entity-desc">
+            Headquartered in Amravati, NVD B&amp;D crafts bespoke residential and commercial structures
+            with exquisite craftsmanship, cutting-edge technology, and a dedication to lasting client relationships.
+          </p>
+          <div class="entity-tags">
+            <span class="entity-tag">Residential</span>
+            <span class="entity-tag">Commercial</span>
+            <span class="entity-tag">Industrial</span>
+            <span class="entity-tag">Development</span>
+          </div>
+        </div>
+        <div class="entity-card reveal reveal-delay-1">
+          <div class="entity-num">02</div>
+          <h3 class="entity-name">NVD Freelancing &amp; Consultants</h3>
+          <p class="entity-desc">
+            Project management as an art form. From drawing board to final execution, NVD F&amp;C guides every
+            project through planning, scheduling, and cost control with tailor-made strategies.
+          </p>
+          <div class="entity-tags">
+            <span class="entity-tag">PMC</span>
+            <span class="entity-tag">Cost Control</span>
+            <span class="entity-tag">Feasibility</span>
+            <span class="entity-tag">Value Engineering</span>
+          </div>
+        </div>
+        <div class="entity-card reveal reveal-delay-2">
+          <div class="entity-num">03</div>
+          <h3 class="entity-name">NVD Interio</h3>
+          <p class="entity-desc">
+            Creators of experiences, curators of aesthetics, and sculptors of functionality.
+            NVD Interio transforms living and working spaces into personal expressions of comfort and style.
+          </p>
+          <div class="entity-tags">
+            <span class="entity-tag">Residential</span>
+            <span class="entity-tag">Commercial</span>
+            <span class="entity-tag">Modular Kitchen</span>
+            <span class="entity-tag">Landscaping</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PROJECTS ══ -->
+  <section class="projects section" id="projects">
+    <div class="container">
+      <div class="projects-head">
+        <div>
+          <span class="label reveal">Portfolio</span>
+          <h2 class="reveal reveal-delay-1">Selected Projects</h2>
+        </div>
+        <div class="projects-filters reveal">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="construction">Construction</button>
+          <button class="filter-btn" data-filter="interiors">Interiors</button>
+          <button class="filter-btn" data-filter="development">Development</button>
+        </div>
+      </div>
+
+      <div class="projects-grid" id="projectsGrid">
+
+        <div class="project-card reveal" data-category="construction">
+          <div class="project-card-img">
+            <div class="project-card-img-inner proj-bg-1 proj-pattern">
+              <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="60" width="120" height="80" stroke="#1a3fa8" stroke-width="2"/>
+                <polygon points="80,20 20,60 140,60" stroke="#1a3fa8" stroke-width="2" fill="none"/>
+                <rect x="65" y="100" width="30" height="40" stroke="#1a3fa8" stroke-width="1.5" fill="none"/>
+                <rect x="30" y="70" width="20" height="20" stroke="#1a3fa8" stroke-width="1.5" fill="none"/>
+                <rect x="110" y="70" width="20" height="20" stroke="#1a3fa8" stroke-width="1.5" fill="none"/>
+              </svg>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD B&amp;D · Residential</div>
+            <div class="project-card-title">Luxury Bungalow</div>
+            <div class="project-card-loc">Latur, Maharashtra</div>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-1" data-category="construction">
+          <div class="project-card-img">
+            <div class="project-card-img-inner proj-bg-2 proj-pattern">
+              <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="30" y="20" width="100" height="120" stroke="#1a3fa8" stroke-width="2"/>
+                <line x1="30" y1="50" x2="130" y2="50" stroke="#1a3fa8" stroke-width="1"/>
+                <line x1="30" y1="80" x2="130" y2="80" stroke="#1a3fa8" stroke-width="1"/>
+                <line x1="30" y1="110" x2="130" y2="110" stroke="#1a3fa8" stroke-width="1"/>
+                <rect x="55" y="115" width="25" height="25" stroke="#1a3fa8" stroke-width="1.5" fill="none"/>
+                <rect x="40" y="30" width="18" height="14" stroke="#1a3fa8" stroke-width="1" fill="none"/>
+                <rect x="65" y="30" width="18" height="14" stroke="#1a3fa8" stroke-width="1" fill="none"/>
+                <rect x="90" y="30" width="18" height="14" stroke="#1a3fa8" stroke-width="1" fill="none"/>
+              </svg>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD B&amp;D · Residential</div>
+            <div class="project-card-title">Multi-Storey Housing</div>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-2" data-category="construction">
+          <div class="project-card-img">
+            <div class="project-card-img-inner proj-bg-3 proj-pattern">
+              <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="15" y="50" width="130" height="90" stroke="#1a3fa8" stroke-width="2"/>
+                <ellipse cx="80" cy="50" rx="65" ry="30" stroke="#1a3fa8" stroke-width="2" fill="none"/>
+                <line x1="15" y1="80" x2="145" y2="80" stroke="#1a3fa8" stroke-width="1"/>
+                <rect x="35" y="100" width="20" height="40" stroke="#1a3fa8" stroke-width="1.5" fill="none"/>
+                <rect x="105" y="100" width="20" height="40" stroke="#1a3fa8" stroke-width="1.5" fill="none"/>
+                <path d="M 15 50 L 80 20 L 145 50" stroke="#1a3fa8" stroke-width="1.5" fill="none"/>
+              </svg>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD B&amp;D · Religious</div>
+            <div class="project-card-title">Masjid Project</div>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+          </div>
+        </div>
+
+        <div class="project-card reveal" data-category="interiors">
+          <div class="project-card-img">
+            <div class="project-card-img-inner proj-bg-4 proj-pattern">
+              <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="15" y="20" width="130" height="120" stroke="#1a3fa8" stroke-width="2"/>
+                <line x1="15" y1="60" x2="85" y2="60" stroke="#1a3fa8" stroke-width="1.5"/>
+                <rect x="15" y="20" width="70" height="40" fill="none" stroke="#1a3fa8" stroke-width="1"/>
+                <rect x="15" y="65" width="70" height="75" fill="none" stroke="#1a3fa8" stroke-width="1"/>
+                <rect x="90" y="20" width="55" height="55" fill="none" stroke="#1a3fa8" stroke-width="1"/>
+                <rect x="90" y="80" width="55" height="60" fill="none" stroke="#1a3fa8" stroke-width="1"/>
+              </svg>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD Interio · Residential</div>
+            <div class="project-card-title">Full Home Interior</div>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-1" data-category="interiors">
+          <div class="project-card-img">
+            <div class="project-card-img-inner proj-bg-5 proj-pattern">
+              <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="80" width="140" height="10" stroke="#1a3fa8" stroke-width="1.5" fill="rgba(26,63,168,0.15)"/>
+                <rect x="10" y="90" width="45" height="50" stroke="#1a3fa8" stroke-width="1.5" fill="none"/>
+                <rect x="58" y="90" width="45" height="50" stroke="#1a3fa8" stroke-width="1.5" fill="none"/>
+                <rect x="106" y="90" width="44" height="50" stroke="#1a3fa8" stroke-width="1.5" fill="none"/>
+                <rect x="10" y="30" width="30" height="48" stroke="#1a3fa8" stroke-width="1" fill="none"/>
+                <rect x="44" y="30" width="30" height="48" stroke="#1a3fa8" stroke-width="1" fill="none"/>
+                <rect x="78" y="30" width="30" height="48" stroke="#1a3fa8" stroke-width="1" fill="none"/>
+                <rect x="112" y="30" width="38" height="48" stroke="#1a3fa8" stroke-width="1" fill="none"/>
+              </svg>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD Interio · Kitchen</div>
+            <div class="project-card-title">Modular Kitchen</div>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-2" data-category="development">
+          <div class="project-card-img">
+            <div class="project-card-img-inner proj-bg-6 proj-pattern">
+              <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 10 120 L 150 120" stroke="#1a3fa8" stroke-width="2"/>
+                <path d="M 10 120 Q 30 80 50 120 Q 70 80 90 120 Q 110 80 130 120 Q 150 80 150 120" stroke="#1a3fa8" stroke-width="1" fill="none"/>
+                <rect x="20" y="60" width="25" height="60" stroke="#1a3fa8" stroke-width="1.5" fill="none"/>
+                <rect x="55" y="40" width="25" height="80" stroke="#1a3fa8" stroke-width="1.5" fill="none"/>
+                <rect x="90" y="55" width="25" height="65" stroke="#1a3fa8" stroke-width="1.5" fill="none"/>
+                <rect x="125" y="70" width="20" height="50" stroke="#1a3fa8" stroke-width="1.5" fill="none"/>
+                <line x1="10" y1="130" x2="150" y2="130" stroke="#1a3fa8" stroke-width="1"/>
+              </svg>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD B&amp;D · Development</div>
+            <div class="project-card-title">Township Development</div>
+            <div class="project-card-loc">Amravati &amp; Loni, MH</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ WHY CHOOSE US ══ -->
+  <section class="why section">
+    <div class="container">
+      <div class="why-inner">
+        <div class="why-content">
+          <span class="label reveal">Why NVD Group</span>
+          <h2 class="reveal reveal-delay-1">Problem Solvers.<br/>Solution Providers.</h2>
+          <div class="divider reveal reveal-delay-1"></div>
+          <p class="reveal reveal-delay-2">
+            NVD Group brings together a management team with proven experience across small, medium,
+            and mega projects in India, UAE, and Saudi Arabia.
+          </p>
+          <p class="reveal reveal-delay-2">
+            With the complete package solution for the entire project lifecycle — from conceptualization
+            to final closure — we deliver exceptional quality and earn lasting client trust.
+          </p>
+        </div>
+        <div class="why-points">
+          <div class="why-point reveal">
+            <div class="why-point-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="why-point-title">End-to-End Solutions</div>
+            <p class="why-point-desc">Complete project lifecycle from feasibility through handover.</p>
+          </div>
+          <div class="why-point reveal reveal-delay-1">
+            <div class="why-point-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+            </div>
+            <div class="why-point-title">Proven Expertise</div>
+            <p class="why-point-desc">International experience across India, UAE &amp; Saudi Arabia.</p>
+          </div>
+          <div class="why-point reveal reveal-delay-2">
+            <div class="why-point-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="why-point-title">Client-First Culture</div>
+            <p class="why-point-desc">Personalized approach, transparent communication, after-sales care.</p>
+          </div>
+          <div class="why-point reveal reveal-delay-3">
+            <div class="why-point-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="why-point-title">Innovation-Led</div>
+            <p class="why-point-desc">Creative, technology-driven solutions for the modern world.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA BANNER ══ -->
+  <div class="cta-banner">
+    <div class="cta-banner-inner">
+      <div>
+        <h2 class="reveal">Ready to Build Your Vision?</h2>
+        <p class="reveal reveal-delay-1">Let's discuss your project and bring your ideas to life.</p>
+      </div>
+      <div class="cta-actions reveal reveal-delay-2">
+        <a href="#contact" class="btn-primary">Start a Conversation</a>
+        <a href="mailto:freelance.nvd@gmail.com" class="btn-outline">Email Us</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CONTACT ══ -->
+  <section class="contact section" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <span class="label reveal">Contact</span>
+          <h2 class="reveal reveal-delay-1">Let's Start Building Together</h2>
+          <div class="divider reveal reveal-delay-1"></div>
+          <p class="reveal reveal-delay-2">
+            Whether you have a project in mind or simply want to explore possibilities,
+            we'd love to hear from you. Reach out and let's create something remarkable.
+          </p>
+
+          <div class="contact-detail reveal reveal-delay-2">
+            <div class="contact-detail-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="contact-detail-title">Registered Address</div>
+              <div class="contact-detail-value">186, AMC 50/91, Frezarpura,<br/>Amravati, Maharashtra — 444602</div>
+            </div>
+          </div>
+
+          <div class="contact-detail reveal reveal-delay-3">
+            <div class="contact-detail-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="contact-detail-title">Email</div>
+              <div class="contact-detail-value">freelance.nvd@gmail.com</div>
+            </div>
+          </div>
+
+          <div class="contact-detail reveal reveal-delay-3">
+            <div class="contact-detail-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div>
+              <div class="contact-detail-title">Website</div>
+              <div class="contact-detail-value">www.nvdgroup.net</div>
+            </div>
+          </div>
+
+          <div class="social-links reveal reveal-delay-4">
+            <a href="#" class="social-link" aria-label="Facebook">Fb</a>
+            <a href="#" class="social-link" aria-label="Instagram">In</a>
+            <a href="#" class="social-link" aria-label="LinkedIn">Li</a>
+            <a href="#" class="social-link" aria-label="YouTube">Yt</a>
+          </div>
+        </div>
+
+        <div class="contact-form-wrap reveal reveal-delay-1">
+          <div class="form-title">Send Us a Message</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" placeholder="Your first name" />
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" placeholder="Your last name" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="your@email.com" />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="+91 00000 00000" />
+          </div>
+          <div class="form-group">
+            <label for="service">Service Interest</label>
+            <select id="service">
+              <option value="">Select a service</option>
+              <option>Construction — Residential</option>
+              <option>Construction — Commercial / Industrial</option>
+              <option>Project Management Consultancy</option>
+              <option>Interior Design</option>
+              <option>Modular Kitchen</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Tell us about your project…"></textarea>
+          </div>
+          <button class="form-submit" type="button" onclick="handleSubmit(this)">Send Message</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">NVD Group</div>
+          <div class="footer-brand-sub">Build · Design · Consult</div>
+          <p class="footer-brand-desc">
+            A multi-disciplinary construction, interior design, and project management consultancy
+            headquartered in Amravati, Maharashtra — serving clients across India and the Middle East.
+          </p>
+        </div>
+        <div>
+          <div class="footer-col-title">Divisions</div>
+          <ul class="footer-links">
+            <li><a href="#divisions">NVD Builders &amp; Developers</a></li>
+            <li><a href="#divisions">NVD Freelancing &amp; Consultants</a></li>
+            <li><a href="#divisions">NVD Interio</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Services</div>
+          <ul class="footer-links">
+            <li><a href="#services">Construction Projects</a></li>
+            <li><a href="#services">Interior Design</a></li>
+            <li><a href="#services">Project Management</a></li>
+            <li><a href="#services">Cost Consulting</a></li>
+            <li><a href="#services">Modular Kitchens</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Connect</div>
+          <ul class="footer-links">
+            <li><a href="mailto:freelance.nvd@gmail.com">freelance.nvd@gmail.com</a></li>
+            <li><a href="http://www.nvdgroup.net" target="_blank" rel="noopener">www.nvdgroup.net</a></li>
+            <li><a href="#">@Naved Akram NVD</a></li>
+            <li><a href="#">LinkedIn: /navedakram</a></li>
+            <li><a href="#">YouTube: NVD GROUP</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 NVD Group. All rights reserved.</p>
+        <ul class="footer-bottom-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══ JAVASCRIPT ══ -->
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Mobile nav toggle
+    const toggle = document.getElementById('navToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    toggle.addEventListener('click', () => {
+      mobileNav.classList.toggle('open');
+    });
+    function closeMobileNav() {
+      mobileNav.classList.remove('open');
+    }
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // Service tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Project filters
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.project-card').forEach(card => {
+          const match = filter === 'all' || card.dataset.category === filter;
+          card.style.display = match ? '' : 'none';
+        });
+      });
+    });
+
+    // Form submit
+    function handleSubmit(btn) {
+      btn.textContent = '✓ Message Sent';
+      btn.style.background = '#0d6e4a';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Send Message';
+        btn.style.background = '';
+        btn.disabled = false;
+        ['fname','lname','email','phone','service','message'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = '';
+        });
+      }, 3500);
+    }
+  </script>
+</body>
+</html>

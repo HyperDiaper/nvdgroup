@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — NVD Group</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: 'DM Sans', sans-serif; background: #f8f8f6; color: #1a1a2e; line-height: 1.6; overflow-x: hidden; }
+    :root {
+      --navy: #0d2461; --blue: #1a3fa8; --blue-mid: #2952c8; --blue-light: #e8edf8;
+      --white: #ffffff; --off-white: #f8f8f6; --grey: #8a8a8a; --grey-dark: #4a4a4a;
+      --ink: #1a1a2e; --border: rgba(13,36,97,0.12); --shadow: 0 4px 32px rgba(13,36,97,0.10);
+      --shadow-hover: 0 14px 48px rgba(13,36,97,0.20); --transition: 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.18; }
+    h1 { font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700; }
+    h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 600; }
+    h3 { font-size: clamp(1rem, 1.8vw, 1.3rem); font-weight: 600; }
+    p { font-size: 1rem; color: var(--grey-dark); line-height: 1.75; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+    .label { font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); margin-bottom: 1rem; display: block; }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* NAV */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(248,248,246,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: var(--transition); }
+    .nav.scrolled { background: rgba(255,255,255,0.98); box-shadow: 0 2px 24px rgba(13,36,97,0.08); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .nav-logo { display: flex; flex-direction: column; gap: 1px; }
+    .nav-logo-main { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--navy); }
+    .nav-logo-sub { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue); }
+    .nav-links { display: flex; align-items: center; gap: 2.4rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--grey-dark); transition: color var(--transition); position: relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; right:0; height:2px; background:var(--blue); transform:scaleX(0); transition:transform var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--navy); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+    .nav-cta { background: var(--navy); color: var(--white) !important; padding: 0.6rem 1.4rem; border-radius: 2px; font-size: 0.8rem !important; font-weight: 600 !important; }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--blue-mid) !important; }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--navy); }
+    .mobile-nav { position: fixed; top: 72px; left: 0; right: 0; z-index: 99; background: var(--white); border-bottom: 1px solid var(--border); max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; }
+    .mobile-nav.open { max-height: 400px; padding: 1.5rem 0; }
+    .mobile-nav-links { list-style: none; padding: 0 2rem; }
+    .mobile-nav-links li { border-bottom: 1px solid var(--border); }
+    .mobile-nav-links a { display: block; padding: 1rem 0; font-size: 1rem; font-weight: 500; color: var(--ink); }
+
+    /* PAGE HERO */
+    .page-hero { background: var(--navy); padding: 9rem 0 5rem; position: relative; overflow: hidden; }
+    .page-hero::before { content:''; position:absolute; top:-30%; right:-10%; width:500px; height:500px; border:1px solid rgba(255,255,255,0.05); border-radius:50%; }
+    .page-hero::after { content:''; position:absolute; bottom:-20%; left:5%; width:300px; height:300px; border:1px solid rgba(255,255,255,0.04); border-radius:50%; }
+    .page-hero-inner { position: relative; z-index: 2; }
+    .page-hero .label { color: rgba(255,255,255,0.55); }
+    .page-hero h1 { color: var(--white); margin-bottom: 1rem; }
+    .page-hero p { color: rgba(255,255,255,0.75); max-width: 600px; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .breadcrumb a { font-size: 0.78rem; color: rgba(255,255,255,0.5); font-weight: 500; }
+    .breadcrumb-sep { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+    .breadcrumb-current { font-size: 0.78rem; color: rgba(255,255,255,0.75); font-weight: 600; }
+
+    /* FILTERS */
+    .filters-bar { background: var(--white); border-bottom: 1px solid var(--border); padding: 1.5rem 0; position: sticky; top: 72px; z-index: 50; }
+    .filters-inner { max-width: 1280px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .filter-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); margin-right: 0.5rem; }
+    .filter-btn { padding: 0.5rem 1.25rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; background: transparent; border: 1px solid var(--border); color: var(--grey); cursor: pointer; transition: var(--transition); }
+    .filter-btn.active, .filter-btn:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+    /* FEATURED PROJECT */
+    .featured { padding: 5rem 0 3rem; background: var(--off-white); }
+    .featured-card { position: relative; overflow: hidden; background: var(--white); box-shadow: var(--shadow); }
+    .featured-img { width: 100%; height: 500px; object-fit: cover; display: block; transition: transform 0.8s ease; }
+    .featured-card:hover .featured-img { transform: scale(1.03); }
+    .featured-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 3rem; background: linear-gradient(to top, rgba(13,36,97,0.92) 0%, transparent 100%); }
+    .featured-badge { display: inline-block; background: var(--blue); color: var(--white); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.8rem; margin-bottom: 0.75rem; }
+    .featured-title { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); color: var(--white); margin-bottom: 0.5rem; }
+    .featured-loc { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+
+    /* PROJECTS GRID */
+    .projects-section { padding: 4rem 0 6rem; background: var(--off-white); }
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .project-card { background: var(--white); overflow: hidden; box-shadow: 0 1px 4px rgba(13,36,97,0.06); transition: var(--transition); }
+    .project-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); }
+    .project-card.hidden { display: none; }
+    .project-card-img { width: 100%; height: 240px; overflow: hidden; position: relative; }
+    .project-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; display: block; }
+    .project-card:hover .project-card-img img { transform: scale(1.07); }
+    .project-card-body { padding: 1.75rem; }
+    .project-card-cat { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.4rem; }
+    .project-card-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--navy); margin-bottom: 0.3rem; }
+    .project-card-loc { font-size: 0.78rem; color: var(--grey); display: flex; align-items: center; gap: 0.3rem; }
+    .project-card-loc::before { content: '◎'; font-size: 0.65rem; }
+    .project-card-desc { font-size: 0.82rem; color: var(--grey-dark); margin-top: 0.75rem; line-height: 1.6; }
+
+    /* CTA */
+    .cta-banner { background: var(--blue); padding: 4rem 0; }
+    .cta-banner-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+    .cta-banner h2 { color: var(--white); font-size: clamp(1.5rem, 3vw, 2.2rem); }
+    .cta-banner p { color: rgba(255,255,255,0.8); margin-top: 0.5rem; }
+    .cta-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-cta-white { background: var(--white); color: var(--navy); padding: 0.9rem 2rem; font-size: 0.875rem; font-weight: 600; border: 2px solid var(--white); display: inline-block; transition: var(--transition); }
+    .btn-cta-white:hover { background: var(--off-white); }
+    .btn-cta-outline { background: transparent; color: var(--white); padding: 0.9rem 2rem; font-size: 0.875rem; font-weight: 600; border: 2px solid rgba(255,255,255,0.5); display: inline-block; transition: var(--transition); }
+    .btn-cta-outline:hover { background: rgba(255,255,255,0.1); }
+
+    /* FOOTER */
+    .footer { background: #0a1c4d; padding: 5rem 0 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .footer-brand-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--white); font-weight: 700; margin-bottom: 0.25rem; }
+    .footer-brand-sub { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1rem; }
+    .footer-brand-desc { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
+    .footer-col-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1.25rem; }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 0.6rem; }
+    .footer-links a { font-size: 0.85rem; color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 2rem; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+    .footer-bottom-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-bottom-links a { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+
+    @media (max-width: 960px) {
+      .nav-links { display: none; } .nav-toggle { display: flex; }
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .featured-img { height: 300px; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-main">NVD Group</span>
+        <span class="nav-logo-sub">Build · Design · Consult</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="divisions.html">Divisions</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <ul class="mobile-nav-links">
+      <li><a href="index.html#about" onclick="closeMobileNav()">About</a></li>
+      <li><a href="services.html" onclick="closeMobileNav()">Services</a></li>
+      <li><a href="divisions.html" onclick="closeMobileNav()">Divisions</a></li>
+      <li><a href="projects.html" onclick="closeMobileNav()">Projects</a></li>
+      <li><a href="contact.html" onclick="closeMobileNav()">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-inner">
+        <div class="breadcrumb reveal">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <span class="breadcrumb-current">Projects</span>
+        </div>
+        <span class="label reveal">Our Portfolio</span>
+        <h1 class="reveal reveal-delay-1">Selected Projects</h1>
+        <p class="reveal reveal-delay-2">A showcase of our work across construction, interior design, project management, and development — from Amravati to the Middle East.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTER BAR -->
+  <div class="filters-bar">
+    <div class="filters-inner">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="construction">Construction</button>
+      <button class="filter-btn" data-filter="interiors">Interiors</button>
+      <button class="filter-btn" data-filter="kitchen">Modular Kitchen</button>
+      <button class="filter-btn" data-filter="development">Development</button>
+      <button class="filter-btn" data-filter="design">Design</button>
+    </div>
+  </div>
+
+  <!-- FEATURED -->
+  <section class="featured">
+    <div class="container">
+      <span class="label reveal" style="margin-bottom:1.5rem;">Featured Project</span>
+      <div class="featured-card reveal reveal-delay-1" style="overflow:hidden;">
+        <img class="featured-img" src="Latur_project.png" alt="Luxury Bungalow — Latur" loading="lazy" />
+        <div class="featured-overlay">
+          <span class="featured-badge">NVD Builders &amp; Developers · Construction</span>
+          <div class="featured-title">Luxury Bungalow — Latur</div>
+          <div class="featured-loc">Latur, Maharashtra · Residential Construction</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALL PROJECTS -->
+  <section class="projects-section">
+    <div class="container">
+      <div class="projects-grid" id="projectsGrid">
+
+        <!-- CONSTRUCTION -->
+        <div class="project-card reveal" data-category="construction">
+          <div class="project-card-img">
+            <img src="Latur_project.png" alt="Luxury Bungalow — Latur" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD B&amp;D · Construction</div>
+            <h3 class="project-card-title">Luxury Bungalow — Latur</h3>
+            <div class="project-card-loc">Latur, Maharashtra · Residential Construction</div>
+            <p class="project-card-desc">A bespoke residential bungalow with modern architecture, premium finishes, and thoughtful spatial planning.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-1" data-category="construction">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=700&q=80" alt="Multi Storey Housing Amravati" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD B&amp;D · Construction</div>
+            <h3 class="project-card-title">Multi-Storey Housing</h3>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+            <p class="project-card-desc">Multi-storey residential building featuring contemporary facade design, durable construction, and modern amenities.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-2" data-category="construction">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=700&q=80" alt="Residential Villa Amravati" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD B&amp;D · Residential</div>
+            <h3 class="project-card-title">Premium Duplex Villa</h3>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+            <p class="project-card-desc">Stylish duplex villa with 4 BHK configuration, rooftop terrace, and high-quality material finishes throughout.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal" data-category="construction">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=700&q=80" alt="Masjid Project Amravati" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD B&amp;D · Religious &amp; Community</div>
+            <h3 class="project-card-title">Masjid Project</h3>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+            <p class="project-card-desc">A beautifully designed community mosque with classical arched architecture, a minaret, and spacious prayer halls.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-1" data-category="construction">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" alt="Row Houses Development" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD B&amp;D · Residential</div>
+            <h3 class="project-card-title">Row House Development</h3>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+            <p class="project-card-desc">Elegant row house cluster offering community living with individual character and private garden spaces.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-2" data-category="construction">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=700&q=80" alt="Industrial shed Amravati" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD B&amp;D · Industrial</div>
+            <h3 class="project-card-title">Industrial Shed &amp; Facility</h3>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+            <p class="project-card-desc">Purpose-built industrial facility engineered for operational efficiency, safety compliance, and long-term durability.</p>
+          </div>
+        </div>
+
+        <!-- INTERIORS -->
+        <div class="project-card reveal" data-category="interiors">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=700&q=80" alt="Full Home Interior Amravati" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD Interio · Residential</div>
+            <h3 class="project-card-title">Full Home Interior</h3>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+            <p class="project-card-desc">Complete home transformation — living areas, bedrooms, and bathrooms reimagined with contemporary elegance.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-1" data-category="interiors">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=700&q=80" alt="Office Interior Amravati" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD Interio · Commercial</div>
+            <h3 class="project-card-title">Jewellery Showroom Interior</h3>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+            <p class="project-card-desc">Luxury retail interior with marble finishes, custom lighting, and premium display fixtures for a high-end jewellery brand.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-2" data-category="interiors">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=700&q=80" alt="Beauty Salon Interior" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD Interio · Commercial</div>
+            <h3 class="project-card-title">Beauty Makeover Salon</h3>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+            <p class="project-card-desc">A modern salon interior with bespoke cabinetry, warm lighting, and a welcoming ambience designed for the client experience.</p>
+          </div>
+        </div>
+
+        <!-- MODULAR KITCHEN -->
+        <div class="project-card reveal" data-category="kitchen">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=700&q=80" alt="Modular Kitchen Amravati" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD Interio · Modular Kitchen</div>
+            <h3 class="project-card-title">Contemporary Modular Kitchen</h3>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+            <p class="project-card-desc">Sleek L-shaped modular kitchen with handleless cabinets, granite countertops, and integrated appliances.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-1" data-category="kitchen">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1556909048-f0d8ac3f2f3b?w=700&q=80" alt="Classic Kitchen Design" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD Interio · Modular Kitchen</div>
+            <h3 class="project-card-title">Classic Modular Kitchen</h3>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+            <p class="project-card-desc">Timeless kitchen design with warm tones, marble backsplash, and custom storage solutions for a family home.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-2" data-category="kitchen">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=700&q=80" alt="Modern Kitchen Latur" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD Interio · Modular Kitchen</div>
+            <h3 class="project-card-title">Modern Kitchen — Latur</h3>
+            <div class="project-card-loc">Latur, Maharashtra</div>
+            <p class="project-card-desc">High-gloss modular kitchen with peninsula island, efficient layout, and premium fitting throughout.</p>
+          </div>
+        </div>
+
+        <!-- DEVELOPMENT -->
+        <div class="project-card reveal" data-category="development">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=700&q=80" alt="Township Development Amravati" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD B&amp;D · Development</div>
+            <h3 class="project-card-title">Township Development</h3>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+            <p class="project-card-desc">Large-scale land development including roads, drainage, boundary walls, and infrastructure for a residential township.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-1" data-category="development">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1581093458791-9f3c3900df7b?w=700&q=80" alt="Development Project Loni" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD B&amp;D · Development</div>
+            <h3 class="project-card-title">Site Development — Loni</h3>
+            <div class="project-card-loc">Loni, Maharashtra</div>
+            <p class="project-card-desc">Site preparation and civil infrastructure works including foundation, compound, and approach roads for a new township.</p>
+          </div>
+        </div>
+
+        <!-- DESIGN / 3D RENDERS -->
+        <div class="project-card reveal" data-category="design">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=700&q=80" alt="Interior Design Project 3D Amravati" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD Interio · Interior Design</div>
+            <h3 class="project-card-title">Luxury Living Room Design</h3>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+            <p class="project-card-desc">Full 3D interior design and build for a spacious living and dining area with custom furniture and ambient lighting.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-1" data-category="design">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=700&q=80" alt="Interior Design Rendering" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD Interio · Planning &amp; Design</div>
+            <h3 class="project-card-title">Villa Interior Design Plan</h3>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+            <p class="project-card-desc">Complete architectural planning, 3D rendering, and interior design package for a large family villa.</p>
+          </div>
+        </div>
+
+        <div class="project-card reveal reveal-delay-2" data-category="design">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=700&q=80" alt="Landscaping Project Amravati" loading="lazy" />
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">NVD Interio · Landscaping</div>
+            <h3 class="project-card-title">Terrace Landscaping</h3>
+            <div class="project-card-loc">Amravati, Maharashtra</div>
+            <p class="project-card-desc">Rooftop garden and terrace landscaping project featuring vertical green walls, ambient lighting, and water features.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <div class="cta-banner-inner">
+      <div>
+        <h2 class="reveal">Have a Project in Mind?</h2>
+        <p class="reveal reveal-delay-1">Let's discuss how NVD Group can bring your vision to life.</p>
+      </div>
+      <div class="cta-actions reveal reveal-delay-2">
+        <a href="contact.html" class="btn-cta-white">Start a Conversation</a>
+        <a href="services.html" class="btn-cta-outline">Our Services</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">NVD Group</div>
+          <div class="footer-brand-sub">Build · Design · Consult</div>
+          <p class="footer-brand-desc">A multi-disciplinary construction, interior design, and project management consultancy headquartered in Amravati, Maharashtra.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Divisions</div>
+          <ul class="footer-links">
+            <li><a href="divisions.html#builders">NVD Builders &amp; Developers</a></li>
+            <li><a href="divisions.html#consulting">NVD Freelancing &amp; Consultants</a></li>
+            <li><a href="divisions.html#interio">NVD Interio</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Services</div>
+          <ul class="footer-links">
+            <li><a href="services.html#construction">Construction</a></li>
+            <li><a href="services.html#consulting">Project Management</a></li>
+            <li><a href="services.html#interiors">Interior Design</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Connect</div>
+          <ul class="footer-links">
+            <li><a href="mailto:freelance.nvd@gmail.com">freelance.nvd@gmail.com</a></li>
+            <li><a href="http://www.nvdgroup.net" target="_blank" rel="noopener">www.nvdgroup.net</a></li>
+            <li><a href="https://www.linkedin.com/in/navedakram/" target="_blank" rel="noopener">LinkedIn: /navedakram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 NVD Group. All rights reserved.</p>
+        <ul class="footer-bottom-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); });
+    const toggle = document.getElementById('navToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    toggle.addEventListener('click', () => { mobileNav.classList.toggle('open'); });
+    function closeMobileNav() { mobileNav.classList.remove('open'); }
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // Filter logic
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.project-card').forEach(card => {
+          const match = filter === 'all' || card.dataset.category === filter;
+          card.classList.toggle('hidden', !match);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
