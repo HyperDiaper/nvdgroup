@@ -252,35 +252,27 @@
             </div>
           </div>
 
-          <div class="contact-detail reveal reveal-delay-3">
-            <div class="contact-detail-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            </div>
-            <div>
-              <div class="contact-detail-title">Website</div>
-              <div class="contact-detail-value"><a href="http://www.nvdgroup.net" target="_blank" rel="noopener">www.nvdgroup.net</a></div>
-            </div>
-          </div>
+
 
           <!-- SOCIAL -->
           <div class="social-section reveal reveal-delay-3">
             <div class="social-label">Follow Naved Akram</div>
             <div class="social-links">
-              <a href="https://www.facebook.com" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+              <a href="https://www.facebook.com/profile.php?id=100093439311850" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
                 <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-                Facebook
+                FB
               </a>
-              <a href="https://www.instagram.com" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+              <a href="https://www.instagram.com/naved_akram_nvd/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
                 <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                Instagram
+                IG
               </a>
               <a href="https://www.linkedin.com/in/navedakram/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
                 <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
                 LinkedIn
               </a>
-              <a href="https://www.youtube.com" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
+              <a href="https://www.youtube.com/@nvd_group" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
                 <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
-                YouTube
+                YT
               </a>
             </div>
           </div>
@@ -288,97 +280,104 @@
 
         <!-- FORM COLUMN -->
         <div class="contact-form-wrap reveal reveal-delay-1">
-          <div id="formContent">
-            <div class="form-title">Send Us a Message</div>
-            <p class="form-subtitle">Fill in the form below and we'll get back to you within 24 hours.</p>
+          <form id="contactForm" action="https://formsubmit.co/s.aashifuddin@gmail.com" method="POST" onsubmit="handleSubmit(); return false;">
+            <!-- FormSubmit Configuration -->
+            <input type="hidden" name="_subject" value="New Project Inquiry — NVD Group">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+            
+            <div id="formContent">
+              <div class="form-title">Send Us a Message</div>
+              <p class="form-subtitle">Fill in the form below and we'll get back to you within 24 hours.</p>
 
-            <div class="form-row">
-              <div class="form-group">
-                <label for="fname">First Name <span style="color:#c0392b">*</span></label>
-                <input type="text" id="fname" placeholder="Your first name" />
-                <div class="form-error-msg" id="err-fname">Please enter your first name.</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fname">First Name <span style="color:#c0392b">*</span></label>
+                  <input type="text" id="fname" name="First Name" placeholder="Your first name" required />
+                  <div class="form-error-msg" id="err-fname">Please enter your first name.</div>
+                </div>
+                <div class="form-group">
+                  <label for="lname">Last Name <span style="color:#c0392b">*</span></label>
+                  <input type="text" id="lname" name="Last Name" placeholder="Your last name" required />
+                  <div class="form-error-msg" id="err-lname">Please enter your last name.</div>
+                </div>
               </div>
+
               <div class="form-group">
-                <label for="lname">Last Name <span style="color:#c0392b">*</span></label>
-                <input type="text" id="lname" placeholder="Your last name" />
-                <div class="form-error-msg" id="err-lname">Please enter your last name.</div>
+                <label for="email">Email Address <span style="color:#c0392b">*</span></label>
+                <input type="email" id="email" name="Email" placeholder="your@email.com" required />
+                <div class="form-error-msg" id="err-email">Please enter a valid email address.</div>
               </div>
-            </div>
 
-            <div class="form-group">
-              <label for="email">Email Address <span style="color:#c0392b">*</span></label>
-              <input type="email" id="email" placeholder="your@email.com" />
-              <div class="form-error-msg" id="err-email">Please enter a valid email address.</div>
-            </div>
-
-            <div class="form-group">
-              <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" placeholder="+91 00000 00000" />
-            </div>
-
-            <div class="form-group">
-              <label for="service">Service Interest <span style="color:#c0392b">*</span></label>
-              <select id="service">
-                <option value="">Select a service…</option>
-                <optgroup label="Construction">
-                  <option value="construction-residential">Construction — Residential (House / Bungalow / Villa)</option>
-                  <option value="construction-highrise">Construction — High Rise / Apartments</option>
-                  <option value="construction-industrial">Construction — Industrial / Factory</option>
-                  <option value="construction-development">Site Development</option>
-                </optgroup>
-                <optgroup label="Project Management">
-                  <option value="pmc-full">Full Project Management Consultancy</option>
-                  <option value="pmc-planning">Planning &amp; Scheduling</option>
-                  <option value="pmc-cost">Cost Analysis &amp; Control</option>
-                  <option value="pmc-feasibility">Project Feasibility Study</option>
-                  <option value="pmc-value">Value Engineering</option>
-                </optgroup>
-                <optgroup label="Interior Design">
-                  <option value="interio-home">Home Interior Design &amp; Build</option>
-                  <option value="interio-office">Office Interior Design &amp; Build</option>
-                  <option value="interio-kitchen">Modular Kitchen</option>
-                  <option value="interio-wardrobe">Modular Wardrobes</option>
-                  <option value="interio-landscape">Landscaping</option>
-                  <option value="interio-furniture">Custom Furniture</option>
-                </optgroup>
-                <option value="other">Other / Multiple Services</option>
-              </select>
-              <div class="form-error-msg" id="err-service">Please select a service.</div>
-            </div>
-
-            <div class="form-row">
               <div class="form-group">
-                <label for="budget">Budget Range</label>
-                <select id="budget">
-                  <option value="">Select a range…</option>
-                  <option>Under ₹10 Lakhs</option>
-                  <option>₹10 – 25 Lakhs</option>
-                  <option>₹25 – 50 Lakhs</option>
-                  <option>₹50 Lakhs – 1 Crore</option>
-                  <option>Above ₹1 Crore</option>
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="Phone" placeholder="+91 00000 00000" />
+              </div>
+
+              <div class="form-group">
+                <label for="service">Service Interest <span style="color:#c0392b">*</span></label>
+                <select id="service" name="Service Interest" required>
+                  <option value="">Select a service…</option>
+                  <optgroup label="Construction">
+                    <option value="construction-residential">Construction — Residential (House / Bungalow / Villa)</option>
+                    <option value="construction-highrise">Construction — High Rise / Apartments</option>
+                    <option value="construction-industrial">Construction — Industrial / Factory</option>
+                    <option value="construction-development">Site Development</option>
+                  </optgroup>
+                  <optgroup label="Project Management">
+                    <option value="pmc-full">Full Project Management Consultancy</option>
+                    <option value="pmc-planning">Planning &amp; Scheduling</option>
+                    <option value="pmc-cost">Cost Analysis &amp; Control</option>
+                    <option value="pmc-feasibility">Project Feasibility Study</option>
+                    <option value="pmc-value">Value Engineering</option>
+                  </optgroup>
+                  <optgroup label="Interior Design">
+                    <option value="interio-home">Home Interior Design &amp; Build</option>
+                    <option value="interio-office">Office Interior Design &amp; Build</option>
+                    <option value="interio-kitchen">Modular Kitchen</option>
+                    <option value="interio-wardrobe">Modular Wardrobes</option>
+                    <option value="interio-landscape">Landscaping</option>
+                    <option value="interio-furniture">Custom Furniture</option>
+                  </optgroup>
+                  <option value="other">Other / Multiple Services</option>
                 </select>
+                <div class="form-error-msg" id="err-service">Please select a service.</div>
               </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="budget">Budget Range</label>
+                  <select id="budget" name="Budget Range">
+                    <option value="">Select a range…</option>
+                    <option>Under ₹10 Lakhs</option>
+                    <option>₹10 – 25 Lakhs</option>
+                    <option>₹25 – 50 Lakhs</option>
+                    <option>₹50 Lakhs – 1 Crore</option>
+                    <option>Above ₹1 Crore</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="timeline">Project Timeline</label>
+                  <select id="timeline" name="Timeline">
+                    <option value="">When do you need to start?</option>
+                    <option>Immediately</option>
+                    <option>Within 1–3 months</option>
+                    <option>3–6 months from now</option>
+                    <option>More than 6 months away</option>
+                    <option>Still planning</option>
+                  </select>
+                </div>
+              </div>
+
               <div class="form-group">
-                <label for="timeline">Project Timeline</label>
-                <select id="timeline">
-                  <option value="">When do you need to start?</option>
-                  <option>Immediately</option>
-                  <option>Within 1–3 months</option>
-                  <option>3–6 months from now</option>
-                  <option>More than 6 months away</option>
-                  <option>Still planning</option>
-                </select>
+                <label for="message">Tell Us About Your Project <span style="color:#c0392b">*</span></label>
+                <textarea id="message" name="Message" placeholder="Describe your project, location, requirements, and any specific questions you have for the team…" required></textarea>
+                <div class="form-error-msg" id="err-message">Please describe your project.</div>
               </div>
+              
+              <button class="form-submit" type="submit" id="submitBtn">Send Message</button>
             </div>
-
-            <div class="form-group">
-              <label for="message">Tell Us About Your Project <span style="color:#c0392b">*</span></label>
-              <textarea id="message" placeholder="Describe your project, location, requirements, and any specific questions you have for the team…"></textarea>
-              <div class="form-error-msg" id="err-message">Please describe your project.</div>
-            </div>
-
-            <button class="form-submit" type="button" id="submitBtn" onclick="handleSubmit()">Send Message</button>
-          </div>
+          </form>
 
           <!-- SUCCESS STATE -->
           <div class="form-success" id="formSuccess">
@@ -417,7 +416,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         </div>
         <div class="loc-item-title">Online</div>
-        <p class="loc-item-value"><a href="http://www.nvdgroup.net" target="_blank" rel="noopener">www.nvdgroup.net</a><br/><br/>Projects across India,<br/>UAE &amp; Saudi Arabia</p>
+        <p class="loc-item-value">Global presence across<br/>India, UAE &amp; Saudi Arabia</p>
       </div>
     </div>
   </div>
@@ -451,9 +450,9 @@
           <div class="footer-col-title">Connect</div>
           <ul class="footer-links">
             <li><a href="mailto:freelance.nvd@gmail.com">freelance.nvd@gmail.com</a></li>
-            <li><a href="http://www.nvdgroup.net" target="_blank" rel="noopener">www.nvdgroup.net</a></li>
-            <li><a href="https://www.linkedin.com/in/navedakram/" target="_blank" rel="noopener">LinkedIn: /navedakram</a></li>
-            <li><a href="https://www.facebook.com" target="_blank" rel="noopener">@Naved Akram NVD</a></li>
+            <li><a href="https://www.instagram.com/naved_akram_nvd/" target="_blank">Instagram: @naved_akram_nvd</a></li>
+            <li><a href="https://www.linkedin.com/in/navedakram/" target="_blank">LinkedIn: /navedakram</a></li>
+            <li><a href="https://www.youtube.com/@nvd_group" target="_blank">YouTube: @nvd_group</a></li>
           </ul>
         </div>
       </div>
@@ -518,12 +517,39 @@
       if (!validate()) return;
       const btn = document.getElementById('submitBtn');
       btn.disabled = true;
-      btn.textContent = 'Sending…';
-      // Simulate form submission (replace with real endpoint as needed)
-      setTimeout(() => {
-        document.getElementById('formContent').style.display = 'none';
-        document.getElementById('formSuccess').classList.add('visible');
-      }, 1200);
+      btn.textContent = 'Sending...';
+
+      const form = document.getElementById('contactForm');
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      fetch('https://formsubmit.co/ajax/s.aashifuddin@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+      })
+      .then(result => {
+        // Success check (handles both string and boolean)
+        if (result.success === "true" || result.success === true) {
+          document.getElementById('formContent').style.display = 'none';
+          document.getElementById('formSuccess').classList.add('visible');
+        } else {
+          throw new Error(result.message || 'Form submission failed');
+        }
+      })
+      .catch(error => {
+        console.warn('AJAX submission failed, falling back to standard submission:', error);
+        // Fallback: If fetch is blocked (common on file://), submit traditionally
+        form.onsubmit = null; 
+        form.submit();
+      });
     }
 
     function resetForm() {
