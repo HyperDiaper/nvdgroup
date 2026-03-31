@@ -280,11 +280,11 @@
 
         <!-- FORM COLUMN -->
         <div class="contact-form-wrap reveal reveal-delay-1">
-          <form id="contactForm" action="https://formsubmit.co/s.aashifuddin@gmail.com" method="POST" onsubmit="handleSubmit(); return false;">
-            <!-- FormSubmit Configuration -->
-            <input type="hidden" name="_subject" value="New Project Inquiry — NVD Group">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_captcha" value="false">
+          <form id="contactForm" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onsubmit="handleSubmit(); return false;">
+            <input type="hidden" name="form-name" value="contact" />
+            <p style="display: none;">
+              <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+            </p>
             
             <div id="formContent">
               <div class="form-title">Send Us a Message</div>
@@ -521,32 +521,19 @@
 
       const form = document.getElementById('contactForm');
       const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
 
-      fetch('https://formsubmit.co/ajax/s.aashifuddin@gmail.com', {
+      // Submit via Netlify Forms AJAX
+      fetch('/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(data)
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
       })
-      .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json();
-      })
-      .then(result => {
-        // Success check (handles both string and boolean)
-        if (result.success === "true" || result.success === true) {
-          document.getElementById('formContent').style.display = 'none';
-          document.getElementById('formSuccess').classList.add('visible');
-        } else {
-          throw new Error(result.message || 'Form submission failed');
-        }
+      .then(() => {
+        document.getElementById('formContent').style.display = 'none';
+        document.getElementById('formSuccess').classList.add('visible');
       })
       .catch(error => {
-        console.warn('AJAX submission failed, falling back to standard submission:', error);
-        // Fallback: If fetch is blocked (common on file://), submit traditionally
+        console.warn('Netlify submission failed, falling back to standard submission:', error);
         form.onsubmit = null; 
         form.submit();
       });
