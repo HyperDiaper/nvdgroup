@@ -1642,42 +1642,48 @@
         </div>
 
         <div class="contact-form-wrap reveal reveal-delay-1">
-          <div class="form-title">Send Us a Message</div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="fname">First Name</label>
-              <input type="text" id="fname" placeholder="Your first name" />
+          <form id="contactForm" name="index-contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="index-contact" />
+            <p style="display: none;">
+              <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+            </p>
+            <div class="form-title">Send Us a Message</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="First Name" placeholder="Your first name" required />
+              </div>
+              <div class="form-group">
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="Last Name" placeholder="Your last name" required />
+              </div>
             </div>
             <div class="form-group">
-              <label for="lname">Last Name</label>
-              <input type="text" id="lname" placeholder="Your last name" />
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="Email" placeholder="your@email.com" required />
             </div>
-          </div>
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" placeholder="your@email.com" />
-          </div>
-          <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" placeholder="+91 00000 00000" />
-          </div>
-          <div class="form-group">
-            <label for="service">Service Interest</label>
-            <select id="service">
-              <option value="">Select a service</option>
-              <option>Construction — Residential</option>
-              <option>Construction — Commercial / Industrial</option>
-              <option>Project Management Consultancy</option>
-              <option>Interior Design</option>
-              <option>Modular Kitchen</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="message">Message</label>
-            <textarea id="message" placeholder="Tell us about your project…"></textarea>
-          </div>
-          <button class="form-submit" type="button" onclick="handleSubmit(this)">Send Message</button>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="Phone" placeholder="+91 00000 00000" />
+            </div>
+            <div class="form-group">
+              <label for="service">Service Interest</label>
+              <select id="service" name="Service Interest" required>
+                <option value="">Select a service</option>
+                <option>Construction — Residential</option>
+                <option>Construction — Commercial / Industrial</option>
+                <option>Project Management Consultancy</option>
+                <option>Interior Design</option>
+                <option>Modular Kitchen</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="Message" placeholder="Tell us about your project…" required></textarea>
+            </div>
+            <button class="form-submit" type="submit" id="submitBtn">Send Message</button>
+          </form>
         </div>
       </div>
     </div>
@@ -1786,21 +1792,38 @@
       });
     });
 
-    // Form submit
-    function handleSubmit(btn) {
-      btn.textContent = '✓ Message Sent';
-      btn.style.background = '#0d6e4a';
+    const handleSubmit = event => {
+      event.preventDefault();
+      
+      const btn = document.getElementById('submitBtn');
       btn.disabled = true;
-      setTimeout(() => {
-        btn.textContent = 'Send Message';
-        btn.style.background = '';
-        btn.disabled = false;
-        ['fname','lname','email','phone','service','message'].forEach(id => {
-          const el = document.getElementById(id);
-          if (el) el.value = '';
-        });
-      }, 3500);
-    }
+      btn.textContent = 'Sending...';
+
+      const myForm = event.target;
+      const formData = new FormData(myForm);
+
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData).toString()
+      })
+      .then(() => {
+        btn.textContent = '✓ Message Sent';
+        btn.style.background = '#0d6e4a';
+        setTimeout(() => {
+          btn.textContent = 'Send Message';
+          btn.style.background = '';
+          btn.disabled = false;
+          myForm.reset();
+        }, 3500);
+      })
+      .catch(error => {
+        console.warn('Netlify submission failed, falling back to standard submission:', error);
+        myForm.submit();
+      });
+    };
+
+    document.getElementById("contactForm").addEventListener("submit", handleSubmit);
   </script>
 </body>
 </html>
